@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->date('tanggal');
             $table->float('sensor')->default(0);
-            $table->enum('status',['Surut','Pasang']);
+            $table->string('status');
             $table->timestamps();
         });
     }

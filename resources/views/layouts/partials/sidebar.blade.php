@@ -54,7 +54,7 @@
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-file"></i>
                         <p>
-                            Blog
+                            Konten Web
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -72,6 +72,24 @@
                             </a>
                         </li>
                     </ul>
+                </li>
+
+                <li class="nav-header">MANAJEMEN AKUN</li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            Profil
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-sign-in-alt"></i>
+                        <p>
+                            Keluar
+                        </p>
+                    </a>
                 </li>
             </ul>
         </nav>
