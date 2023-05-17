@@ -17,12 +17,25 @@ Route::get('/', function () {
     return view('layouts.front');
 });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+Route::group([
+    'middleware' => ['auth', 'role:admin,user'],
+    'prefix' => 'admin'
+], function () {
+    Route::get('/', function () {
+        return redirect()->route('dashboard');
+    });
+
+
+    Route::group([
+        'middleware' => 'role:admin',
+    ], function () {
+        //
+    });
+
+
+    Route::group([
+        'middleware' => 'role:user',
+    ], function () {
+        //
+    });
 });
