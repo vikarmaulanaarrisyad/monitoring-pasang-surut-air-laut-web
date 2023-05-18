@@ -20,6 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/sensor/data',[SensorLaravelController::class, 'getDataSensor'])->name('sensor.data');
+Route::get('/sensor/ajax',[SensorLaravelController::class, 'getSensorAjax'])->name('sensor.ajax');
 Route::get('/sensor',[SensorLaravelController::class, 'getSingleDataSensor'])->name('sensor.data_single');
 
 Route::get('/sensor/{sensor}/status/{status}',[SensorLaravelController::class, 'store'])->name('sensor.store');

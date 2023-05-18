@@ -134,7 +134,7 @@
 
     <!-- AdminLTE App -->
     <script src="{{ asset('/AdminLTE/dist/js/adminlte.js') }}"></script>
-    <script src="{{ asset('/js/custom.js') }}"></script>
+    {{-- <script src="{{ asset('/js/custom.js') }}"></script> --}}
 
     @stack('scripts')
 </body>
