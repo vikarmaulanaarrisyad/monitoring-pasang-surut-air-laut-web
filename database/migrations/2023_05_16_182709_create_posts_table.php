@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->longText('description');
             $table->enum('status',['publish','archived'])->default('archived');
-            $table->string('avatar')->nullable();
+            $table->string('path_image')->nullable();
             $table->timestamps();
         });
     }

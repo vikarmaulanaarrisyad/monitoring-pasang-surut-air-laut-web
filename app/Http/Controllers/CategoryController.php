@@ -73,7 +73,7 @@ class CategoryController extends Controller
 
         Category::create($data);
 
-        return response()->json(['message' => 'Data berhasil disimpan!']);
+        return response()->json(['message' => 'Data berhasil disimpan']);
     }
 
     /**

@@ -50,8 +50,8 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item {{ request()->is(['category'])  ? 'menu-is-opening menu-open' : ''}}">
-                    <a href="#" class="nav-link {{ request()->is(['category'])  ? 'active' : ''}}">
+                <li class="nav-item {{ request()->is(['category', 'posts'])  ? 'menu-is-opening menu-open' : ''}}">
+                    <a href="#" class="nav-link {{ request()->is(['category','posts'])  ? 'active' : ''}}">
                         <i class="nav-icon fas fa-file"></i>
                         <p>
                             Konten Web
@@ -66,7 +66,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="flot.html" class="nav-link">
+                            <a href="{{route('posts.index')}}" class="nav-link {{ request()->is('posts*') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Postingan</p>
                             </a>

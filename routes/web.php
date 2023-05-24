@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\SensorController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +38,10 @@ Route::group([
         Route::resource('/sensor', SensorController::class);
         Route::get('/category/data', [CategoryController::class, 'data'])->name('category.data');
         Route::resource('/category', CategoryController::class)->except('create');
+        Route::get('/posts/data',[PostController::class, 'data'])->name('posts.data');
+        Route::resource('posts', PostController::class);
+        Route::get('/posts/{id}/detail', [PostController::class, 'detail'])->name('posts.detail');
+
     });
 
 
