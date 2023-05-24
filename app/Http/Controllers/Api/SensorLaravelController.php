@@ -10,11 +10,43 @@ use Illuminate\Http\Request;
 
 class SensorLaravelController extends Controller
 {
-    public function getDataSensor()
+    public function getDataSensor(Request $request)
     {
-        $sensor = Sensor::all();
 
-        return response()->json(['data' => $sensor]);
+        $date_range = $request->input('datefilter');
+        if (strpos($date_range, ' - ') !== false) {
+
+            $date_parts = explode(' - ', $date_range);
+
+            $start_date  = $date_parts[0];
+            $end_date  = $date_parts[1];
+
+            $sensor = Sensor::when($request->datefilter != "", function ($query) use ($start_date, $end_date) {
+                $query->whereBetween('created_at', [$start_date, $end_date]);
+            });
+        } else {
+            $sensor = Sensor::orderBy('created_at', 'ASC');
+        }
+
+        // return response()->json(['data' => $sensor]);
+        return datatables($sensor)
+            ->addIndexColumn()
+            ->editColumn('tanggal', function ($sensor) {
+                return tanggal_indonesia($sensor->created_at);
+            })
+            ->editColumn('waktu', function ($sensor) {
+                return date('H:i:s', strtotime($sensor->created_at)) . ' WIB';
+            })
+            ->editColumn('sensor', function ($sensor) {
+                return $sensor->sensor . ' cm';
+            })
+            ->editColumn('status', function ($sensor) {
+                return '
+                    <span class="badge badge-' . $sensor->statusColor() . '"> '.$sensor->status.'</span>
+                ';
+            })
+            ->escapeColumns([])
+            ->make(true);
     }
 
     public function getSingleDataSensor()
@@ -39,7 +71,7 @@ class SensorLaravelController extends Controller
         $listDataSensor = [];
         $listTanggal = [];
         $listStatus = [];
-        $dataSensor = Sensor::orderBy('created_at', 'ASC')->get();
+        $dataSensor = Sensor::orderBy('created_at', 'DESC')->get();
 
         foreach ($dataSensor as $sensor) {
             $listDataSensor[] = $sensor->sensor;

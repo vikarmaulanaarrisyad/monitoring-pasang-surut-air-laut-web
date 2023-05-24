@@ -12,7 +12,7 @@ class SensorController extends Controller
      */
     public function index()
     {
-        //
+        return view ('sensor.index');
     }
 
     /**

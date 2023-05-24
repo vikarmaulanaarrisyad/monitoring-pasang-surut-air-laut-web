@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SensorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,6 +33,7 @@ Route::group([
         'middleware' => 'role:admin',
     ], function () {
         //
+        Route::resource('/sensor', SensorController::class);
     });
 
 
