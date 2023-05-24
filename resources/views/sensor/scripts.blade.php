@@ -5,10 +5,6 @@
             processing: true,
             autoWidth: false,
             serverSide: true,
-            colReorder: {
-                realtime: true
-            },
-
             ajax: {
                 url: '{{ route('sensor.data') }}',
                 data: function(d) {

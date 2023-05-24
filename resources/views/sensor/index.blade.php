@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Data Sensor')
+@section('title', 'Data Pasang Surut Air Laut')
 
 @section('breadcrumb')
-
+ <li class="breadcrumb-item active">Data Pasang Surut Air Laut</li>
 @endsection
 
 @section('content')
