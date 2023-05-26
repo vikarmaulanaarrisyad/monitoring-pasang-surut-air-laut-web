@@ -3,7 +3,8 @@
 @section('title', 'Data Pasang Surut Air Laut')
 
 @section('breadcrumb')
- <li class="breadcrumb-item active">Data Pasang Surut Air Laut</li>
+    @parent
+    <li class="breadcrumb-item active">Monitoring</li>
 @endsection
 
 @section('content')

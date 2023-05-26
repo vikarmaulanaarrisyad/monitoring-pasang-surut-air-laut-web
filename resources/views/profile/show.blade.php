@@ -1,45 +1,60 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div>
-        <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-            @if (Laravel\Fortify\Features::canUpdateProfileInformation())
-                @livewire('profile.update-profile-information-form')
+@section('title', 'Profile')
 
-                <x-section-border />
-            @endif
+@section('breadcrumb')
+    @parent
+    <li class="breadcrumb-item active">Profile</li>
+@endsection
 
-            @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::updatePasswords()))
-                <div class="mt-10 sm:mt-0">
-                    @livewire('profile.update-password-form')
+@section('content')
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card card-primary card-outline">
+                <div class="card-body box-profile">
+                    <div class="text-center">
+                        @if (empty(Auth()->user()->avatar))
+                            <img class="profile-user-img img-fluid img-circle"
+                                src="{{ asset('AdminLTE/dist/img/user1-128x128.jpg') }}" alt="User profile picture"
+                                width="400">
+                        @else
+                            <img class="profile-user-img img-fluid img-circle"
+                                src="{{ Storage::url(Auth()->user()->avatar) }}" alt="User profile picture" width="400">
+                        @endif
+                    </div>
                 </div>
-
-                <x-section-border />
-            @endif
-
-            @if (Laravel\Fortify\Features::canManageTwoFactorAuthentication())
-                <div class="mt-10 sm:mt-0">
-                    @livewire('profile.two-factor-authentication-form')
-                </div>
-
-                <x-section-border />
-            @endif
-
-            <div class="mt-10 sm:mt-0">
-                @livewire('profile.logout-other-browser-sessions-form')
             </div>
+        </div>
 
-            @if (Laravel\Jetstream\Jetstream::hasAccountDeletionFeatures())
-                <x-section-border />
-
-                <div class="mt-10 sm:mt-0">
-                    @livewire('profile.delete-user-form')
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header p-2">
+                    <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link @if (request('pills') == '') active @endif"
+                                href="{{ route('profile.show') }}">Profil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @if (request('pills') == 'password') active @endif"
+                                href="{{ route('profile.show') }}?pills=password">Password</a>
+                        </li>
+                    </ul>
                 </div>
-            @endif
+                <div class="card-body">
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade @if (request('pills') == '') show active @endif" id="pills-profil"
+                            role="tabpanel" aria-labelledby="pills-profil-tab">
+                            @includeIf('profile.update-profile-information-form')
+                        </div>
+                        <div class="tab-pane fade @if (request('pills') == 'password') show active @endif" id="pills-password"
+                            role="tabpanel" aria-labelledby="pills-password-tab">
+                            @includeIf('profile.update-password-form')
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</x-app-layout>
+@endsection
+
+<x-notif></x-notif>

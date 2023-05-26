@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="{{ asset('/AdminLTE/plugins/jqvmap/jqvmap.min.css') }}">
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="{{ asset('/AdminLTE/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
-<!-- SweetAler2 -->
+    <!-- SweetAler2 -->
     <link rel="stylesheet" href="{{ asset('/AdminLTE/plugins/sweetalert2/sweetalert2.min.css') }}">
     @stack('css_vendor')
 
@@ -78,7 +78,7 @@
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 @section('breadcrumb')
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
                                 @show
                             </ol>
                         </div><!-- /.col -->
@@ -127,10 +127,10 @@
 
     <!-- overlayScrollbars -->
     <script src="{{ asset('/AdminLTE/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
- <!-- sweetalert2 -->
+    <!-- sweetalert2 -->
     <script src="{{ asset('/AdminLTE/plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
 
-   @stack('scripts_vendor')
+    @stack('scripts_vendor')
 
     <!-- AdminLTE App -->
     <script src="{{ asset('/AdminLTE/dist/js/adminlte.js') }}"></script>

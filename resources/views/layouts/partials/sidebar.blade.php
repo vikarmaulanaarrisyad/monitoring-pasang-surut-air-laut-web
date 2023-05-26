@@ -12,12 +12,12 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                {{-- @if (Storage::disk('public')->exists(auth()->user()->path_image))
-                <img src="{{ Storage::disk('public')->url(auth()->user()->path_image) }}" alt="" class="img-circle elevation-2">
+                @if (Storage::disk('public')->exists(auth()->user()->avatar))
+                    <img src="{{ Storage::url(auth()->user()->avatar) }}" alt="" class="img-circle elevation-2">
                 @else
-                @endif --}}
-                <img src="{{ asset('AdminLTE/dist/img/user1-128x128.jpg') }}" alt=""
-                    class="img-circle elevation-2">
+                    <img src="{{ asset('AdminLTE/dist/img/user1-128x128.jpg') }}" alt=""
+                        class="img-circle elevation-2">
+                @endif
             </div>
             <div class="info">
                 <a href="{{ route('profile.show') }}" class="d-block" data-toggle="tooltip" data-placement="top"
@@ -43,15 +43,16 @@
                 </li>
                 <li class="nav-header">MASTER DATA</li>
                 <li class="nav-item">
-                    <a href="{{ route('sensor.index') }}" class="nav-link {{ request()->is('sensor') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-folder"></i>
+                    <a href="{{ route('sensor.index') }}"
+                        class="nav-link {{ request()->is('sensor') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-chart-pie"></i>
                         <p>
-                            Data Sensor
+                            Monitoring
                         </p>
                     </a>
                 </li>
-                <li class="nav-item {{ request()->is(['category', 'posts'])  ? 'menu-is-opening menu-open' : ''}}">
-                    <a href="#" class="nav-link {{ request()->is(['category','posts'])  ? 'active' : ''}}">
+                <li class="nav-item {{ request()->is(['category', 'posts']) ? 'menu-is-opening menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->is(['category', 'posts']) ? 'active' : '' }}">
                         <i class="nav-icon fas fa-file"></i>
                         <p>
                             Konten Web
@@ -60,13 +61,15 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('category.index') }}" class="nav-link {{ request()->is('category') ? 'active' : '' }}">
+                            <a href="{{ route('category.index') }}"
+                                class="nav-link {{ request()->is('category') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Kategori</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('posts.index')}}" class="nav-link {{ request()->is('posts*') ? 'active' : '' }}">
+                            <a href="{{ route('posts.index') }}"
+                                class="nav-link {{ request()->is('posts*') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Postingan</p>
                             </a>
@@ -76,10 +79,21 @@
 
                 <li class="nav-header">MANAJEMEN AKUN</li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('profile.show') }}"
+                        class="nav-link {{ request()->is('user/profile*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-user"></i>
                         <p>
                             Profil
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-header">PENGATURAN APLIKASI</li>
+                <li class="nav-item">
+                    <a href="{{ route('profile.show') }}"
+                        class="nav-link {{ request()->is('setting') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-cogs"></i>
+                        <p>
+                            Setting
                         </p>
                     </a>
                 </li>
