@@ -98,13 +98,13 @@ class SensorLaravelController extends Controller
     public function kirimDataSensor(Request $request)
     {
         $distance = $request->input('distance');
-        $windSpeed = $request->input('wind_speed');
+        $windSpeed = $request->input('weend_speed');
         $winstatusdSpeed = $request->input('status');
         // Lakukan pemrosesan data ultrasonik, misalnya menyimpan ke database atau melakukan tindakan lainnya
         $data = [
             'tanggal' => date('Y-m-d'),
             'sensor' => $distance,
-            'wind_speed' => $windSpeed,
+            'weend_speed' => $windSpeed,
             'status' => $winstatusdSpeed,
         ];
 
