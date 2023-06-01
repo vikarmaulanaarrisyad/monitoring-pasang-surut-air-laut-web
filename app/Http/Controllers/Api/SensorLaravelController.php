@@ -42,7 +42,7 @@ class SensorLaravelController extends Controller
             })
             ->editColumn('status', function ($sensor) {
                 return '
-                    <span class="badge badge-' . $sensor->statusColor() . '"> '.$sensor->status.'</span>
+                    <span class="badge badge-' . $sensor->statusColor() . '"> ' . $sensor->status . '</span>
                 ';
             })
             ->escapeColumns([])
@@ -94,19 +94,19 @@ class SensorLaravelController extends Controller
         ]);
     }
 
-    public function receiveUltrasonicData(Request $request)
+    public function kirimDataSensor(Request $request)
     {
         $distance = $request->input('distance');
-        // Lakukan pemrosesan data ultrasonik, misalnya menyimpan ke database atau melakukan tindakan lainnya
-
-        return response()->json(['status' => 'success']);
-    }
-
-    public function receiveWindSpeedData(Request $request)
-    {
         $windSpeed = $request->input('wind_speed');
-        // Lakukan pemrosesan data kecepatan angin, misalnya menyimpan ke database atau melakukan tindakan lainnya
+        // Lakukan pemrosesan data ultrasonik, misalnya menyimpan ke database atau melakukan tindakan lainnya
+        $data = [
+            'sensor' => $distance,
+            'wind_speed' => $windSpeed,
+        ];
+
+        Sensor::create($data);
 
         return response()->json(['status' => 'success']);
     }
+
 }
