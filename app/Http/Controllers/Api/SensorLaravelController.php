@@ -105,7 +105,7 @@ class SensorLaravelController extends Controller
             'tanggal' => date('Y-m-d'),
             'sensor' => $distance,
             'wind_speed' => $windSpeed,
-            'status' => $status,
+            'status' => $winstatusdSpeed,
         ];
 
         Sensor::create($data);
