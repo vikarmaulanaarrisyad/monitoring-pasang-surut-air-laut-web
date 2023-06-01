@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Models\Sensor;
 use DateTime;
 use DateTimeZone;
+use App\Models\Sensor;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Validator;
 
 class SensorLaravelController extends Controller
 {
@@ -97,20 +98,62 @@ class SensorLaravelController extends Controller
 
     public function kirimDataSensor(Request $request)
     {
-        $distance = $request->input('distance');
-        $windSpeed = $request->input('weend_speed');
-        $winstatusdSpeed = $request->input('status');
-        // Lakukan pemrosesan data ultrasonik, misalnya menyimpan ke database atau melakukan tindakan lainnya
-        $data = [
-            'tanggal' => date('Y-m-d'),
-            'sensor' => $distance,
-            'weend_speed' => $windSpeed,
-            'status' => $winstatusdSpeed,
-        ];
+        // $distance = $request->input('distance');
+        // $windSpeed = $request->input('weend_speed');
+        // $winstatusdSpeed = $request->input('status');
+        // // Lakukan pemrosesan data ultrasonik, misalnya menyimpan ke database atau melakukan tindakan lainnya
+        // $data = [
+        //     'tanggal' => date('Y-m-d'),
+        //     'sensor' => $distance,
+        //     'weend_speed' => $windSpeed,
+        //     'status' => $winstatusdSpeed,
+        // ];
 
-        Sensor::create($data);
+        // Sensor::create($data);
 
-        return response()->json(['status' => 'success']);
+        // return response()->json(['status' => 'success']);
+
+        //validate data
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'distance'     => 'required',
+                'weend_speed'   => 'required',
+            ],
+            [
+                'distance.required' => 'Nilai sensor wajib disi !',
+                'weend_speed.required' => 'Weend Speed Wajib disi !',
+            ]
+        );
+
+        if ($validator->fails()) {
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Silahkan Isi Bidang Yang Kosong',
+                'data'    => $validator->errors()
+            ], 401);
+        } else {
+
+            $post = Sensor::create([
+                'tanggal' => date('Y-m-d'),
+                'sensor'     => $request->input('distance'),
+                'weend_speed'   => $request->input('weend_speed'),
+                'status'   => $request->input('status'),
+            ]);
+
+            if ($post) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Berhasil Disimpan!',
+                ], 200);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Gagal Disimpan!',
+                ], 401);
+            }
+        }
     }
 
 }
