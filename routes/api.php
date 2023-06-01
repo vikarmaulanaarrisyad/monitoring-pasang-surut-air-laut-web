@@ -25,5 +25,5 @@ Route::get('/sensor',[SensorLaravelController::class, 'getSingleDataSensor'])->n
 
 Route::get('/sensor/{sensor}/status/{status}',[SensorLaravelController::class, 'store'])->name('sensor.store');
 
-Route::post('/ultrasonic', [SensorLaravelController::class, 'kirimDataSensor']);
+Route::post('/kirim_data', [SensorLaravelController::class, 'kirimDataSensor']);
 
