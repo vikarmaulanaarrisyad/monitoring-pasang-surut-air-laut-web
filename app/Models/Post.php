@@ -10,8 +10,14 @@ class Post extends Model
 
     public function category_post()
     {
-        return $this->belongsToMany(Category::class, 'category_post')->withTimestamps();
+        return $this->belongsToMany(Category::class)->withTimestamps();
     }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
+
 
     public function statusColor()
     {

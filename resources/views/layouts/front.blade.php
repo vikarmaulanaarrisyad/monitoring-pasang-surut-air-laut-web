@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>{{ config('app.name') }}</title>
+    <title>{{ config('app.name') }} - @yield('title')</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -44,7 +44,6 @@
     <!-- End Hero -->
 
     <main id="main">
-
         <!-- ======= About Section ======= -->
         @include('layouts.partials.front_about')
         <!-- End About Section -->
@@ -67,89 +66,16 @@
                 </div>
 
                 <div class="row g-0" data-aos="fade-left">
-
-                    <div class="col-lg-3 col-md-4">
-                        <div class="gallery-item" data-aos="zoom-in" data-aos-delay="100">
-                            <a href="{{ asset('frontend') }}/assets/img/gallery/gallery-1.jpg"
-                                class="gallery-lightbox">
-                                <img src="{{ asset('frontend') }}/assets/img/gallery/gallery-1.jpg" alt=""
-                                    class="img-fluid">
-                            </a>
+                    @foreach ($postingan as $post)
+                        <div class="col-lg-3 col-md-4">
+                            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="100">
+                                <a href="{{ Storage::url($post->path_image) }}" class="gallery-lightbox">
+                                    <img src="{{ Storage::url($post->path_image) }}" alt="" class="img-fluid" style="height: 120px;">
+                                </a>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-4">
-                        <div class="gallery-item" data-aos="zoom-in" data-aos-delay="150">
-                            <a href="{{ asset('frontend') }}/assets/img/gallery/gallery-2.jpg"
-                                class="gallery-lightbox">
-                                <img src="{{ asset('frontend') }}/assets/img/gallery/gallery-2.jpg" alt=""
-                                    class="img-fluid">
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-4">
-                        <div class="gallery-item" data-aos="zoom-in" data-aos-delay="200">
-                            <a href="{{ asset('frontend') }}/assets/img/gallery/gallery-3.jpg"
-                                class="gallery-lightbox">
-                                <img src="{{ asset('frontend') }}/assets/img/gallery/gallery-3.jpg" alt=""
-                                    class="img-fluid">
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-4">
-                        <div class="gallery-item" data-aos="zoom-in" data-aos-delay="250">
-                            <a href="{{ asset('frontend') }}/assets/img/gallery/gallery-4.jpg"
-                                class="gallery-lightbox">
-                                <img src="{{ asset('frontend') }}/assets/img/gallery/gallery-4.jpg" alt=""
-                                    class="img-fluid">
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-4">
-                        <div class="gallery-item" data-aos="zoom-in" data-aos-delay="300">
-                            <a href="{{ asset('frontend') }}/assets/img/gallery/gallery-5.jpg"
-                                class="gallery-lightbox">
-                                <img src="{{ asset('frontend') }}/assets/img/gallery/gallery-5.jpg" alt=""
-                                    class="img-fluid">
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-4">
-                        <div class="gallery-item" data-aos="zoom-in" data-aos-delay="350">
-                            <a href="{{ asset('frontend') }}/assets/img/gallery/gallery-6.jpg"
-                                class="gallery-lightbox">
-                                <img src="{{ asset('frontend') }}/assets/img/gallery/gallery-6.jpg" alt=""
-                                    class="img-fluid">
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-4">
-                        <div class="gallery-item" data-aos="zoom-in" data-aos-delay="400">
-                            <a href="{{ asset('frontend') }}/assets/img/gallery/gallery-7.jpg"
-                                class="gallery-lightbox">
-                                <img src="{{ asset('frontend') }}/assets/img/gallery/gallery-7.jpg" alt=""
-                                    class="img-fluid">
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-4">
-                        <div class="gallery-item" data-aos="zoom-in" data-aos-delay="450">
-                            <a href="{{ asset('frontend') }}/assets/img/gallery/gallery-8.jpg"
-                                class="gallery-lightbox">
-                                <img src="{{ asset('frontend') }}/assets/img/gallery/gallery-8.jpg" alt=""
-                                    class="img-fluid">
-                            </a>
-                        </div>
-                    </div>
-
+                    @endforeach
                 </div>
-
             </div>
         </section><!-- End Gallery Section -->
     </main>

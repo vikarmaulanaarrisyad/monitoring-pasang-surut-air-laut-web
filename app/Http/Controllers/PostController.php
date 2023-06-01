@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Category;
+use Exception;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -41,7 +43,7 @@ class PostController extends Controller
                     <div class="btn-group">
                        <a href="' . route('posts.detail', $query->id) . '" class="btn btn-sm btn-primary"><i class="fas fa-search-plus"></i> Detail</a>
                         <button onclick="editForm(`' . route('posts.show', $query->id) . '`)" class="btn btn-sm btn-warning"><i class="fas fa-pencil-alt"></i> Edit</button>
-                        <button class="btn btn-sm btn-danger" onclick="deleteData(`' . route('posts.destroy', $query->id) . '`,`'.$query->name.'`)"><i class="fas fa-trash-alt"></i> Delete</button>
+                        <button class="btn btn-sm btn-danger" onclick="deleteData(`' . route('posts.destroy', $query->id) . '`,`' . $query->name . '`)"><i class="fas fa-trash-alt"></i> Delete</button>
                     </div>
                 ';
             })
@@ -94,20 +96,29 @@ class PostController extends Controller
             return response()->json(['errors' => $validator->errors(), 'message' => 'Silakan periksa kembali isian Anda dan coba kembali.'], 422);
         }
 
-        $data = $request->except('path_image', 'categories');
-        $data = [
-            'title' => $request->title,
-            'slug' => Str::slug($request->title),
-            'short_description' => $request->short_description,
-            'description' => $request->body,
-            'publish_date' => $request->publish_date,
-            'path_image' => upload('post', $request->file('path_image'), 'post'),
-        ];
+        try {
+            DB::transaction(function () use ($request) {
+                $data = $request->except('path_image', 'categories');
+                $data['title'] = $request->title;
+                $data['slug'] = Str::slug($request->title);
+                $data['short_description'] = $request->short_description;
+                $data['description'] = $request->body;
+                $data['publish_date'] = $request->publish_date;
+                $data['path_image'] = upload('post', $request->file('path_image'), 'post');
 
-        $post = Post::create($data);
-        $post->category_campaign()->attach($request->categories);
+                $post = Post::create($data);
 
-        return response()->json(['message' => 'Data berhasil disimpan.', 'data' => $post]);
+                $post->categories()->attach($request->categories);
+            });
+
+            DB::commit();
+
+            return response()->json(['message' => 'Data berhasil disimpan.']);
+        } catch (Exception $e) {
+            DB::rollback();
+
+            return response()->json(['errors' => $e->getMessage()]);
+        }
     }
 
     /**
