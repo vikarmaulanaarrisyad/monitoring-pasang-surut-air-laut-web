@@ -93,4 +93,20 @@ class SensorLaravelController extends Controller
             'listStatus' => $listStatus
         ]);
     }
+
+    public function receiveUltrasonicData(Request $request)
+    {
+        $distance = $request->input('distance');
+        // Lakukan pemrosesan data ultrasonik, misalnya menyimpan ke database atau melakukan tindakan lainnya
+
+        return response()->json(['status' => 'success']);
+    }
+
+    public function receiveWindSpeedData(Request $request)
+    {
+        $windSpeed = $request->input('wind_speed');
+        // Lakukan pemrosesan data kecepatan angin, misalnya menyimpan ke database atau melakukan tindakan lainnya
+
+        return response()->json(['status' => 'success']);
+    }
 }
