@@ -11,7 +11,6 @@ class FrontController extends Controller
     public function index()
     {
         $postingan = Post::where('status', 'publish')
-            ->orderBy('publish_date', 'desc')
             ->limit(8)
             ->get();
 
