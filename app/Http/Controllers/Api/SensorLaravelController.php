@@ -7,6 +7,7 @@ use App\Models\Sensor;
 use DateTime;
 use DateTimeZone;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
 
 class SensorLaravelController extends Controller
 {
@@ -100,8 +101,10 @@ class SensorLaravelController extends Controller
         $windSpeed = $request->input('wind_speed');
         // Lakukan pemrosesan data ultrasonik, misalnya menyimpan ke database atau melakukan tindakan lainnya
         $data = [
+            'tanggal' => date('Y-m-d'),
             'sensor' => $distance,
             'wind_speed' => $windSpeed,
+            'status' => $windSpeed,
         ];
 
         Sensor::create($data);
