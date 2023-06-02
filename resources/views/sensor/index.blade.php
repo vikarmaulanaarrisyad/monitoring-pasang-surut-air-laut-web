@@ -9,22 +9,36 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-7 col-lg-7 col-sm-7 col-7">
+        <div class="col-md-6 col-lg-6 col-sm-6 col-6">
             <x-card>
                 <x-slot name="header">
                     <h5>Filter Tanggal</h5>
                 </x-slot>
+                <div class="form-group mb-2">
+                    <input type="text" class="form-control float-right" name="datefilter" placeholder="Masukan tanggal"
+                        autocomplete="off">
+                </div>
 
-                <div class="row">
-                    <div class="col-md-12 col-lg-12 col-12">
-                        <div class="form-group">
-                            <input type="text" class="form-control float-right" name="datefilter"
-                                placeholder="Masukan tanggal" autocomplete="off">
-                        </div>
-                    </div>
+            </x-card>
+        </div>
+        <div class="col-md-6 col-lg-6 col-sm-6 col-6">
+            <x-card>
+                <x-slot name="header">
+                    <h5>Filter Status</h5>
+                </x-slot>
+
+                <div class="form-group">
+                    <select name="status2" id="status2" class="custom-select">
+                        <option value="Aman" {{ request('status') == 'Aman' ? 'selected' : '' }}>Aman</option>
+                        <option value="Siaga" {{ request('status') == 'Siaga' ? 'selected' : '' }}>Siaga</option>
+                        <option value="Bahaya" {{ request('status') == 'Bahaya' ? 'selected' : '' }}>Bahaya</option>
+                    </select>
                 </div>
             </x-card>
         </div>
+    </div>
+
+    <div class="row">
         <div class="col-md-12 col-lg-12 col-sm-12 col-12">
             <x-card>
                 <x-table class="table-sensor">
@@ -34,6 +48,7 @@
                             <th>Tanggal</th>
                             <th>Waktu</th>
                             <th>Tinggi Air</th>
+                            <th>Kecepatan</th>
                             <th>Status</th>
                         </tr>
                     </x-slot>

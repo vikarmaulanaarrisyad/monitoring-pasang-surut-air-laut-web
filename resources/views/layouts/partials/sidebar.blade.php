@@ -87,7 +87,7 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-header">PENGATURAN APLIKASI</li>
+                {{-- <li class="nav-header">PENGATURAN APLIKASI</li>
                 <li class="nav-item">
                     <a href="{{ route('setting.index') }}"
                         class="nav-link {{ request()->is('setting') ? 'active' : '' }}">
@@ -96,14 +96,19 @@
                             Setting
                         </p>
                     </a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="javascript:void(0)" class="nav-link"
+                        onclick="document.querySelector('#form-logout').submit()">
                         <i class="nav-icon fas fa-sign-in-alt"></i>
                         <p>
                             Keluar
                         </p>
                     </a>
+
+                    <form action="{{ route('logout') }}" method="post" id="form-logout">
+                        @csrf
+                    </form>
                 </li>
             </ul>
         </nav>

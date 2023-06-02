@@ -9,6 +9,7 @@
                 url: '{{ route('sensor.data') }}',
                 data: function(d) {
                     d.datefilter = $('input[name="datefilter"]').val();
+                    d.status = $('[name=status2]').val();
                 }
             },
             columns: [{
@@ -26,6 +27,9 @@
                 },
                 {
                     data: 'sensor'
+                },
+                {
+                    data: 'weend_speed'
                 },
                 {
                     data: 'status',
@@ -47,6 +51,11 @@
         $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
             $(this).val('');
             table.ajax.reload();
+        });
+
+        $('[name=status2]').on('change', function() {
+            table.ajax.reload();
+            $('input[name="datefilter"]').val('');
         });
     </script>
 @endpush

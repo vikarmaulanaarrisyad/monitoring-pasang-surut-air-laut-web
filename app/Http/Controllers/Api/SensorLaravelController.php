@@ -14,7 +14,6 @@ class SensorLaravelController extends Controller
 {
     public function getDataSensor(Request $request)
     {
-
         $date_range = $request->input('datefilter');
         if (strpos($date_range, ' - ') !== false) {
 
@@ -27,7 +26,9 @@ class SensorLaravelController extends Controller
                 $query->whereBetween('created_at', [$start_date, $end_date]);
             });
         } else {
-            $sensor = Sensor::orderBy('created_at', 'ASC');
+            $sensor = Sensor::when($request->has('status') != "" && $request->status != "", function ($query) use ($request) {
+                    $query->where('status', $request->status);
+            });
         }
 
         // return response()->json(['data' => $sensor]);
@@ -41,6 +42,9 @@ class SensorLaravelController extends Controller
             })
             ->editColumn('sensor', function ($sensor) {
                 return $sensor->sensor . ' cm';
+            })
+            ->editColumn('weend_speed', function ($sensor) {
+                return $sensor->weend_speed . ' Km/h';
             })
             ->editColumn('status', function ($sensor) {
                 return '
@@ -70,49 +74,23 @@ class SensorLaravelController extends Controller
 
     public function getSensorAjax(Request $request)
     {
-        $listDataSensor = [];
-        $listTanggal = [];
-        $listStatus = [];
-        $dataSensor = Sensor::orderBy('created_at', 'DESC')->get();
-
-        foreach ($dataSensor as $sensor) {
-            $listDataSensor[] = $sensor->sensor;
-            $listTanggal[] = $sensor->created_at->format('Y-m-d H:i:s'); // Ubah format tanggal menjadi YYYY-MM-DD HH:mm:ss
-            $listStatus[] = $sensor->status;
-        }
-
-        // Konversi waktu ke zona waktu yang diinginkan (jika perlu)
-        // Misalnya, jika ingin mengubah zona waktu ke GMT+7
-        foreach ($listTanggal as $key => $tanggal) {
-            $datetime = new DateTime($tanggal, new DateTimeZone('UTC'));
-            $datetime->setTimezone(new DateTimeZone('Asia/Jakarta'));
-            $listTanggal[$key] = $datetime->format('Y-m-d H:i:s');
-        }
+        $latestSensor = Sensor::latest()->first();
 
         return response()->json([
-            'listTanggal' => $listTanggal,
-            'listDataSensor' => $listDataSensor,
-            'listStatus' => $listStatus
+            'data' => $latestSensor,
+        ]);
+    }
+    public function getKecepatanAll(Request $request)
+    {
+        $kecepatan = Sensor::orderBy('id', 'ASC')->latest()->limit(5)->get();
+
+        return response()->json([
+            'data' => $kecepatan,
         ]);
     }
 
     public function kirimDataSensor(Request $request)
     {
-        // $distance = $request->input('distance');
-        // $windSpeed = $request->input('weend_speed');
-        // $winstatusdSpeed = $request->input('status');
-        // // Lakukan pemrosesan data ultrasonik, misalnya menyimpan ke database atau melakukan tindakan lainnya
-        // $data = [
-        //     'tanggal' => date('Y-m-d'),
-        //     'sensor' => $distance,
-        //     'weend_speed' => $windSpeed,
-        //     'status' => $winstatusdSpeed,
-        // ];
-
-        // Sensor::create($data);
-
-        // return response()->json(['status' => 'success']);
-
         //validate data
         $validator = Validator::make(
             $request->all(),
@@ -155,5 +133,4 @@ class SensorLaravelController extends Controller
             }
         }
     }
-
 }
