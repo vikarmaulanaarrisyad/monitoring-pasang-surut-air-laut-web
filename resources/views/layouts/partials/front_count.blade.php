@@ -38,6 +38,15 @@
                 'displayInput': true,
                 'displayPrevious': true,
             });
+            $('.knob2').knob({
+                'width': 200,
+                'height': 200,
+                'min': 0,
+                'max': 100,
+                'readOnly': true,
+                'displayInput': true,
+                'displayPrevious': true,
+            });
 
             setInterval(() => {
                 getDataSensor();
