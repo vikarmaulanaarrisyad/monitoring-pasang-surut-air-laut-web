@@ -219,7 +219,7 @@
                     // Mendapatkan data kecepatan
                     var kecepatan = response.data.map(item => item.weend_speed);
                     var tanggal = response.data.map(item => item.tanggal);
-
+                    
                     // Mengupdate label dan data pada chart kecepatan
                     areaChartData.labels = tanggal;
                     areaChartData.datasets[0].data = kecepatan;
