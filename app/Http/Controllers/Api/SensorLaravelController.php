@@ -23,7 +23,7 @@ class SensorLaravelController extends Controller
             $end_date  = $date_parts[1];
 
             $sensor = Sensor::when($request->datefilter != "", function ($query) use ($start_date, $end_date) {
-                $query->whereBetween('created_at', [$start_date, $end_date]);
+                $query->whereBetween('date', [$start_date, $end_date]);
             });
         } else {
             $sensor = Sensor::when($request->has('status') != "" && $request->status != "", function ($query) use ($request) {
@@ -44,7 +44,7 @@ class SensorLaravelController extends Controller
                 return $sensor->sensor . ' cm';
             })
             ->editColumn('weend_speed', function ($sensor) {
-                return $sensor->weend_speed . ' Km/h';
+                return $sensor->weend_speed . ' m/s';
             })
             ->editColumn('status', function ($sensor) {
                 return '

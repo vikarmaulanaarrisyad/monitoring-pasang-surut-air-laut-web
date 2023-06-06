@@ -174,6 +174,21 @@
                 dataType: 'json',
                 success: function(response) {
                     var data = response.data;
+                    // variabel untuk menampung tinggi aquarium
+                    var tinggiMaxAquarium = 2500;
+                    // mengukur tinggi air
+                    var tinggiAir = tinggiMaxAquarium - data.sensor;
+                    // presentasi ketinggian air
+                    var presentaseTinggiAir = (tinggiAir/tinggiMaxAquarium)*100; // hasil
+
+                    // Mengubah data ketinggian air menjadi integer atau dibulatkan
+                    var roundedKetinggian = Math.round(presentaseTinggiAir);
+
+                    // Mengupdate label dan data pada chart ketinggian air
+                    ketinggianChart.data.labels = [roundedKetinggian];
+                    ketinggianChart.data.datasets[0].label = [data.status];
+                    ketinggianChart.data.datasets[0].data = [roundedKetinggian];
+
                     // Mengupdate warna latar belakang chart ketinggian air berdasarkan status
                     var ketinggianBackgroundColor;
                     if (data.status == 'Aman') {
@@ -184,13 +199,6 @@
                         ketinggianBackgroundColor = 'red';
                     }
                     ketinggianChart.data.datasets[0].backgroundColor = [ketinggianBackgroundColor];
-                    // Mengubah data ketinggian air menjadi integer atau dibulatkan
-                    var roundedKetinggian = Math.round(data.sensor);
-
-                    // Mengupdate label dan data pada chart ketinggian air
-                    ketinggianChart.data.labels = [roundedKetinggian];
-                    ketinggianChart.data.datasets[0].label = [data.status];
-                    ketinggianChart.data.datasets[0].data = [roundedKetinggian];
 
                     // Mengupdate grafik ketinggian air
                     ketinggianChart.update();
