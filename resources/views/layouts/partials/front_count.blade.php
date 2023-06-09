@@ -69,7 +69,7 @@
                         .trigger('change');
 
                     $('.knob-description').text('Status : ' + response.data.status);
-                    $('.knob-description2').text('Arus Air Laut : ' + response.data.weend_speed);
+                    $('.knob-description2').text('Kecepatan Angin : ' + response.data.weend_speed);
                 },
                 errors: function(errors) {
                     console.log(errors)
