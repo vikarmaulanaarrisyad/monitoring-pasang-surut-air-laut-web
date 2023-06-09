@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Front\FrontController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SensorController;
 use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +43,9 @@ Route::group([
             ->name('setting.index');
         Route::put('/setting/{setting}', [SettingController::class, 'update'])
             ->name('setting.update');
+
+        Route::get('/report/data/{start}/{end}', [ReportController::class, 'data'])->name('report.data');
+        Route::get('/report/pdf/{start}/{end}', [ReportController::class, 'exportPDF'])->name('report.export_pdf');
     });
 
 

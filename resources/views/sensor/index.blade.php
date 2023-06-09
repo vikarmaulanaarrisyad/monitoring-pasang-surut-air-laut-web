@@ -41,6 +41,12 @@
     <div class="row">
         <div class="col-md-12 col-lg-12 col-sm-12 col-12">
             <x-card>
+                {{-- <x-slot name="header">
+                    <div class="btn-group">
+                        <a target="_blank" href="{{ route('report.export_pdf', compact('datefilter')) }}"
+                            class="btn btn-danger"><i class="fas fa-file-pdf"></i> Export PDF</a>
+                    </div>
+                </x-slot> --}}
                 <x-table class="table-sensor">
                     <x-slot name="thead">
                         <tr>
