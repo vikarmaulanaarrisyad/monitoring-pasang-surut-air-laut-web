@@ -101,8 +101,8 @@ class SensorLaravelController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'distance'     => 'required',
-                'weend_speed'   => 'required',
+                'distance'     => 'nullable',
+                'weend_speed'   => 'nullable',
             ],
             [
                 'distance.required' => 'Nilai sensor wajib disi !',
