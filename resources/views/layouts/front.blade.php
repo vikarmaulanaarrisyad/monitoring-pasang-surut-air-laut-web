@@ -342,8 +342,8 @@
     <script src="{{ asset('frontend') }}/js/jquery.easing.min.js"></script>
     <script src="{{ asset('frontend') }}/js/nivo-lightbox.js"></script>
     <script src="{{ asset('frontend') }}/js/jquery.magnific-popup.min.js"></script>
-    <script src="{{ asset('frontend') }}/js/form-validator.min.js"></script>
-    <script src="{{ asset('frontend') }}/js/contact-form-script.js"></script>
+    {{-- <script src="{{ asset('frontend') }}/js/form-validator.min.js"></script> --}}
+    {{-- <script src="{{ asset('frontend') }}/js/contact-form-script.js"></script> --}}
     <script src="{{ asset('frontend') }}/js/main.js"></script>
 
     <script src="https://code.highcharts.com/highcharts.js"></script>
