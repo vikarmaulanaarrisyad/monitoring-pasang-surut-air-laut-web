@@ -10,10 +10,10 @@ class FrontController extends Controller
 {
     public function index()
     {
-        $postingan = Post::where('status', 'publish')
+        $posts = Post::where('status', 'publish')
             ->limit(8)
             ->get();
 
-        return view('layouts.front', compact('postingan'));
+        return view('front.welcome', compact('posts'));
     }
 }

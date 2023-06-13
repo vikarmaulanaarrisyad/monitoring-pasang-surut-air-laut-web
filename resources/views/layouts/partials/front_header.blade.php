@@ -4,8 +4,6 @@
 
       <div class="logo">
         <h1><a href="{{ url('/') }}"><span>{{ config('app.name') }}</span></a></h1>
-        <!-- Uncomment below if you prefer to use an image logo -->
-        <!-- <a href="index.html"><img src="{{ asset('frontend') }}/assets/img/logo.png" alt="" class="img-fluid"></a>-->
       </div>
 
       <nav id="navbar" class="navbar">
@@ -14,10 +12,11 @@
           <li><a class="nav-link scrollto" href="#about">About</a></li>
           <li><a class="nav-link scrollto" href="#features">Features</a></li>
           <li><a class="nav-link scrollto" href="#gallery">Gallery</a></li>
+          <li><a class="nav-link scrollto" href="{{ route('front.blog') }}">Blog</a></li>
           <li><a class="nav-link scrollto" href="{{ route('login') }}">Login</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav><!-- .navbar -->
+      </nav>
 
     </div>
   </header>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Front\FrontController;
+use App\Http\Controllers\FrontPostController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SensorController;
@@ -21,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [FrontController::class, 'index']);
+Route::get('/blog', [FrontPostController::class, 'index'])->name('front.blog');
 
 Route::group([
     'middleware' => ['auth', 'role:admin,user'],
