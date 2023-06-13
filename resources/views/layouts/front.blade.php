@@ -248,8 +248,7 @@
                         <div>
                             <h2 class="section-title">Latest Blog Posts</h2>
                             <div class="desc-text">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do</p>
-                                <p>eiusmod tempor incididunt ut labore et dolore.</p>
+                                <p>Postingan Terbaru</p>
                             </div>
                         </div>
                     </div>
