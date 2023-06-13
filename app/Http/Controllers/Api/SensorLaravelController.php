@@ -73,6 +73,7 @@ class SensorLaravelController extends Controller
             'tanggal' => Date('Y-m-d'),
             'sensor' => $request->sensor,
             'status' => $request->status,
+            'weend_speed'   => $request->weend_speed,
         ];
 
         Sensor::create($data);
