@@ -52,7 +52,7 @@
                             <a class="nav-link page-scroll" href="#statistik">Statistik</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link page-scroll" href="#postingan">Postingan</a>
+                            <a class="nav-link page-scroll" href="#blog">Postingan</a>
                         </li>
                     </ul>
                 </div>
