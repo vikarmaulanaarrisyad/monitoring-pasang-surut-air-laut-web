@@ -515,9 +515,6 @@
                 url: '{{ route('sensor.data_multiple') }}',
                 method: 'GET',
                 success: function(response) {
-                    // Data berhasil diterima dari sumber eksternal
-                    console.log(response.data); // Tampilkan data yang diterima di konsol (opsional)
-
                     // Mengambil data tanggal dan weend_speed dari respons
                     var data = response.data.map(function(item) {
                         return [item.tanggal, item.sensor]; // Menggunakan format [tanggal, weend_speed]
@@ -552,7 +549,7 @@
         }
 
         // Memanggil fungsi getSensorData setiap 3 detik (interval polling)
-        setInterval(getSensorData, 3000);
+        setInterval(getSensorData, 2000);
     </script>
 
 </body>
