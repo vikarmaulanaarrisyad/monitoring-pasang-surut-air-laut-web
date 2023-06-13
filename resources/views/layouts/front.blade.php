@@ -8,9 +8,9 @@
     <meta name="keywords" content="Bootstrap, Landing page, Template, Business, Service">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="author" content="Grayrids">
-    <title>@yield('title')</title>
+    <title>Monitoring Ketinggian Air</title>
     <!--====== Favicon Icon ======-->
-    <link rel="shortcut icon" href="{{ asset('frontend') }}/img/2.png" type="image/png">
+    <link rel="shortcut icon" href="{{ asset('frontend') }}/img/logo2.jpg" type="image/png">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{ asset('frontend') }}/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('frontend') }}/css/animate.css">
