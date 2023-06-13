@@ -14,6 +14,12 @@ class FrontController extends Controller
             ->limit(8)
             ->get();
 
-        return view('front.welcome', compact('posts'));
+        return view('layouts.front', compact('posts'));
     }
+
+    // public function singlePost($id)
+    // {
+    //     $post = Post::findOrfail($id);
+    //     return view('front.blog.single_post', compact('post'));
+    // }
 }

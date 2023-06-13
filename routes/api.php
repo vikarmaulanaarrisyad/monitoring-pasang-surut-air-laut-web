@@ -23,6 +23,7 @@ Route::get('/sensor/data',[SensorLaravelController::class, 'getDataSensor'])->na
 Route::get('/sensor/ajax',[SensorLaravelController::class, 'getSensorAjax'])->name('sensor.ajax');
 Route::get('/sensor/kecepatan',[SensorLaravelController::class, 'getKecepatanAll'])->name('sensor.kecepatan_all');
 Route::get('/sensor',[SensorLaravelController::class, 'getSingleDataSensor'])->name('sensor.data_single');
+Route::get('/sensor/data_multiple',[SensorLaravelController::class, 'data_multiple'])->name('sensor.data_multiple');
 
 Route::get('/sensor/{sensor}/status/{status}',[SensorLaravelController::class, 'store'])->name('sensor.store');
 

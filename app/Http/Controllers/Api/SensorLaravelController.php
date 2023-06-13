@@ -27,7 +27,7 @@ class SensorLaravelController extends Controller
             });
         } else {
             $sensor = Sensor::when($request->has('status') != "" && $request->status != "", function ($query) use ($request) {
-                    $query->where('status', $request->status);
+                $query->where('status', $request->status);
             });
         }
 
@@ -58,6 +58,12 @@ class SensorLaravelController extends Controller
     public function getSingleDataSensor()
     {
         $sensor = Sensor::latest()->orderBy('created_at', 'DESC')->first();
+        return response()->json(['data' => $sensor]);
+    }
+
+    public function data_multiple()
+    {
+        $sensor = Sensor::orderBy('created_at', 'ASC')->take(6)->get();
         return response()->json(['data' => $sensor]);
     }
 
