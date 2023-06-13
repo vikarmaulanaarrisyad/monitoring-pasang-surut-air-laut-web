@@ -97,46 +97,24 @@ class SensorLaravelController extends Controller
 
     public function kirimDataSensor(Request $request)
     {
-        //validate data
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'distance'     => 'nullable',
-                'weend_speed'   => 'nullable',
-            ],
-            [
-                'distance.required' => 'Nilai sensor wajib disi !',
-                'weend_speed.required' => 'Weend Speed Wajib disi !',
-            ]
-        );
 
-        if ($validator->fails()) {
+        $post = Sensor::create([
+            'tanggal' => date('Y-m-d'),
+            'sensor'     => $request->input('distance'),
+            'weend_speed'   => $request->input('weend_speed'),
+            'status'   => $request->input('status'),
+        ]);
 
+        if ($post) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil Disimpan!',
+            ], 200);
+        } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Silahkan Isi Bidang Yang Kosong',
-                'data'    => $validator->errors()
+                'message' => 'Gagal Disimpan!',
             ], 401);
-        } else {
-
-            $post = Sensor::create([
-                'tanggal' => date('Y-m-d'),
-                'sensor'     => $request->input('distance'),
-                'weend_speed'   => $request->input('weend_speed'),
-                'status'   => $request->input('status'),
-            ]);
-
-            if ($post) {
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Berhasil Disimpan!',
-                ], 200);
-            } else {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Gagal Disimpan!',
-                ], 401);
-            }
         }
     }
 }
