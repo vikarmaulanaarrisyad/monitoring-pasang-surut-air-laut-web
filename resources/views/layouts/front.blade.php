@@ -413,7 +413,7 @@
 
             series: [{
                 name: 'Speed',
-                data: [],
+                data: [0],
                 tooltip: {
                     valueSuffix: ' m/s'
                 },
@@ -503,7 +503,7 @@
             },
             series: [{
                 name: 'Ketinggian Air',
-                data: []
+                data: [0]
             }]
         });
 
