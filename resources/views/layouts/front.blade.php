@@ -413,7 +413,7 @@
 
             series: [{
                 name: 'Speed',
-                data: [80],
+                data: [],
                 tooltip: {
                     valueSuffix: ' m/s'
                 },
@@ -456,7 +456,6 @@
                     method: 'GET',
                     success: function(response) {
                         var data = response.data.weend_speed;
-                        console.log(data);
 
                         // Memperbarui nilai pada grafik dengan data yang diperoleh dari server
                         let newVal = parseFloat(data);
@@ -469,7 +468,7 @@
                     }
                 });
             }
-        }, 3000);
+        }, 2000);
     </script>
 
     <script>
