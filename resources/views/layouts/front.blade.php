@@ -527,7 +527,7 @@
                     // Memperbarui kategori dan data pada grafik dengan efek animasi
                     if (chart) {
                         chart.series[0].update({
-                            data: sensor,
+                            data: [sensor],
                             animation: {
                                 duration: 1000 // Durasi animasi dalam milidetik
                             }
