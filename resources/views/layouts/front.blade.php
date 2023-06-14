@@ -519,8 +519,6 @@
                         return  parseFloat(item.sensor); // Menggunakan format [tanggal, weend_speed]
                     });
 
-                    console.log(sensor);
-
                     // Mengisi kategori pada sumbu x dengan tanggal
                     var categories = response.data.map(function(item) {
                         return item.tanggal;
