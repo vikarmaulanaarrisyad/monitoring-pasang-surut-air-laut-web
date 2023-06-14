@@ -487,7 +487,7 @@
                     'target="_blank">Wikipedia.com</a>'
             },
             xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                categories: []
             },
             yAxis: {
                 title: {
@@ -516,7 +516,7 @@
                 method: 'GET',
                 success: function(response) {
                     // Mengambil data tanggal dan weend_speed dari respons
-                    var data = response.data.map(function(item) {
+                    var sensor = response.data.map(function(item) {
                         return [item.tanggal, item.sensor]; // Menggunakan format [tanggal, weend_speed]
                     });
 
@@ -528,7 +528,7 @@
                     // Memperbarui kategori dan data pada grafik dengan efek animasi
                     if (chart) {
                         chart.series[0].update({
-                            data: data,
+                            data: sensor,
                             animation: {
                                 duration: 1000 // Durasi animasi dalam milidetik
                             }
