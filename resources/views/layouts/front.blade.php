@@ -503,7 +503,7 @@
             },
             series: [{
                 name: 'Ketinggian Air',
-                data: [0]
+                data: []
             }]
         });
 
@@ -516,7 +516,7 @@
                 success: function(response) {
                     // Mengambil data tanggal dan weend_speed dari respons
                     var sensor = response.data.map(function(item) {
-                        return  item.sensor; // Menggunakan format [tanggal, weend_speed]
+                        return  parseFloat(item.sensor); // Menggunakan format [tanggal, weend_speed]
                     });
 
                     console.log(sensor);
