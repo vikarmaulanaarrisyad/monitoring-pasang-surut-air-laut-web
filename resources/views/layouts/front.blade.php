@@ -516,8 +516,10 @@
                 success: function(response) {
                     // Mengambil data tanggal dan weend_speed dari respons
                     var sensor = response.data.map(function(item) {
-                        return  item.sensor; // Menggunakan format [tanggal, weend_speed]
+                        return  [item.sensor]; // Menggunakan format [tanggal, weend_speed]
                     });
+
+                    console.log(sensor);
 
                     // Mengisi kategori pada sumbu x dengan tanggal
                     var categories = response.data.map(function(item) {
@@ -527,7 +529,7 @@
                     // Memperbarui kategori dan data pada grafik dengan efek animasi
                     if (chart) {
                         chart.series[0].update({
-                            data: [sensor],
+                            data: sensor,
                             animation: {
                                 duration: 1000 // Durasi animasi dalam milidetik
                             }
