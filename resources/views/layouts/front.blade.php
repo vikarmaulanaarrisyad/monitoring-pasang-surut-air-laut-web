@@ -379,7 +379,7 @@
             // the value axis
             yAxis: {
                 min: 0,
-                max: 2000,
+                max: 50,
                 tickPixelInterval: 72,
                 tickPosition: 'inside',
                 tickColor: Highcharts.defaultOptions.chart.backgroundColor || '#FFFFFF',
@@ -395,17 +395,17 @@
                 lineWidth: 0,
                 plotBands: [{
                     from: 0,
-                    to: 500,
+                    to: 10,
                     color: '#55BF3B', // green
                     thickness: 20
                 }, {
-                    from: 500,
-                    to: 1000,
+                    from: 10,
+                    to: 25,
                     color: '#DDDF0D', // yellow
                     thickness: 20
                 }, {
-                    from: 1000,
-                    to: 2000,
+                    from: 25,
+                    to: 50,
                     color: '#DF5353', // red
                     thickness: 20
                 }]
@@ -490,7 +490,7 @@
             },
             yAxis: {
                 title: {
-                    text: 'Cm'
+                    text: 'Distance (Cm)'
                 }
             },
             plotOptions: {
@@ -516,12 +516,20 @@
                 success: function(response) {
                     // Mengambil data tanggal dan weend_speed dari respons
                     var sensor = response.data.map(function(item) {
-                        return  parseFloat(item.sensor); // Menggunakan format [tanggal, weend_speed]
+                        return parseFloat(item.sensor); // Menggunakan format [tanggal, weend_speed]
                     });
 
                     // Mengisi kategori pada sumbu x dengan tanggal
                     var categories = response.data.map(function(item) {
-                        return item.tanggal;
+                        var timestamps = item.created_at;
+                        var dateObj = new Date(timestamps);
+                        var options = {
+                            timeZone: 'Asia/Jakarta',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        };
+                        var time = dateObj.toLocaleTimeString('id-ID', options);
+                        return time;
                     });
 
                     // Memperbarui kategori dan data pada grafik dengan efek animasi

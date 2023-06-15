@@ -64,6 +64,7 @@ class SensorLaravelController extends Controller
     public function data_multiple()
     {
         $sensor = Sensor::orderBy('created_at', 'ASC')->take(6)->get();
+
         return response()->json(['data' => $sensor]);
     }
 
