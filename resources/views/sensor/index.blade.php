@@ -41,12 +41,14 @@
     <div class="row">
         <div class="col-md-12 col-lg-12 col-sm-12 col-12">
             <x-card>
-                {{-- <x-slot name="header">
-                    <div class="btn-group">
-                        <a target="_blank" href="{{ route('report.export_pdf', compact('datefilter')) }}"
+                <x-slot name="header">
+                  <div class="btn-group">
+                        <button data-toggle="modal" data-target="#modal-form" class="btn btn-primary"><i
+                                class="fas fa-pencil-alt"></i> Ubah Periode</button>
+                        <a target="_blank" href="{{ route('report.export_pdf', compact('start','end')) }}"
                             class="btn btn-danger"><i class="fas fa-file-pdf"></i> Export PDF</a>
                     </div>
-                </x-slot> --}}
+                </x-slot>
                 <x-table class="table-sensor">
                     <x-slot name="thead">
                         <tr>
@@ -62,8 +64,10 @@
             </x-card>
         </div>
     </div>
+    @include('sensor.form')
 @endsection
 
 @include('includes.datatable')
 @include('includes.daterangepicker')
+@include('includes.datepicker')
 @include('sensor.scripts')

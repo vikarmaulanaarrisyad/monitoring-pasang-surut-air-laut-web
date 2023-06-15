@@ -10,9 +10,16 @@ class SensorController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view ('sensor.index');
+        $start = now()->subDays(30)->format('Y-m-d');
+        $end = date('Y-m-d');
+
+        if ($request->has('start') && $request->start != "" && $request->has('end') && $request->end != "") {
+            $start = $request->start;
+            $end = $request->end;
+        }
+        return view('sensor.index', compact('start','end'));
     }
 
     /**
