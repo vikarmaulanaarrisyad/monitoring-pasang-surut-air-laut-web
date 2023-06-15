@@ -23,7 +23,7 @@ class SensorLaravelController extends Controller
             $end_date  = $date_parts[1];
 
             $sensor = Sensor::when($request->datefilter != "", function ($query) use ($start_date, $end_date) {
-                $query->whereBetween('date', [$start_date, $end_date]);
+                $query->whereBetween('tanggal', [$start_date, $end_date]);
             });
         } else {
             $sensor = Sensor::when($request->has('status') != "" && $request->status != "", function ($query) use ($request) {

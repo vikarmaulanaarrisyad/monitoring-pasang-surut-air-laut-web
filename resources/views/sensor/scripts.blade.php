@@ -39,9 +39,9 @@
             ],
         });
 
-        $('.datepicker').on('change.datetimepicker', function() {
-            table.ajax.reload();
-        });
+        // $('.datepicker').on('change.datetimepicker', function() {
+        //     table.ajax.reload();
+        // });
 
         $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
             $(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));

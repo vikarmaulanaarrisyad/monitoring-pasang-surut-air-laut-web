@@ -24,12 +24,6 @@ class ReportController extends Controller
             ];
         } else {
             foreach ($sensors as $sensor) {
-
-                //  var tinggiMaxAquarium = 2500;
-                //     // mengukur tinggi air
-                //     var tinggiAir = tinggiMaxAquarium - data.sensor;
-                //     // presentasi ketinggian air
-                //     var presentaseTinggiAir = (tinggiAir/tinggiMaxAquarium)*100; // hasil
                 $row = [];
                 $row['DT_RowIndex'] = $i++;
                 $row['tanggal'] = tanggal_indonesia($sensor->created_at, strtotime($sensor->created_at)) . ' ' . date('H:I:s', strtotime($sensor->created_at));
@@ -41,15 +35,6 @@ class ReportController extends Controller
         }
 
         return $data;
-    }
-
-    public function data($start, $end)
-    {
-        $data = $this->getData($start, $end);
-
-        return datatables($data)
-            ->escapeColumns([])
-            ->make(true);
     }
 
     public function exportPDF($start, $end)
