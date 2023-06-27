@@ -55,6 +55,9 @@
                             <a class="nav-link page-scroll" href="#blog">Postingan</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link page-scroll" href="{{ route('monitoring.index') }}">Monitoring</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link page-scroll" href="{{ route('login') }}">Login Admin</a>
                         </li>
                     </ul>
