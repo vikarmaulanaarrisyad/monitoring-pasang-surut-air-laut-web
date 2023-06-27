@@ -35,7 +35,7 @@
         <nav class="navbar navbar-expand-md bg-inverse fixed-top scrolling-navbar">
             <div class="container">
                 <a href="{{ url('/') }}" class="navbar-brand"><img src="{{ asset('frontend') }}/img/logo1.jpg"
-                        alt="" style="width: 55%; height: 45%;"></a>
+                        alt="" style="width: 25%; height: 20%;"></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="lni-menu"></i>
@@ -268,15 +268,16 @@
                         <!-- Blog Item Starts -->
                         <div class="blog-item-wrapper">
                             <div class="blog-item-img">
-                                <a href="javascript:void(0)">
+                                <a href="{{ route('single_post', $post->slug) }}">
                                     <img src="{{ Storage::url($post->path_image) }}" class="img-fluid"
-                                        alt="" width="150px" height="100px">
+                                        alt="" width="100%" style="height:120px">
                                 </a>
                             </div>
                             <div class="blog-item-text">
-                                <h3><a href="javascript:void(0)">{{ $post->title }}</a></h3>
-                                <p>
-                                    {!! $post->short_description !!}
+                                <h3><a href="{{ route('single_post', $post->slug) }}">{{ $post->title }}</a></h3>
+                                <p class="text-justify">
+                                    {{-- {!! $post->short_description !!} --}}
+                                    {{ substr($post->short_description, 0, 200) . '.......' }}
                                 </p>
                             </div>
                             <div class="author">

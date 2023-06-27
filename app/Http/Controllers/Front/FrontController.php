@@ -17,9 +17,10 @@ class FrontController extends Controller
         return view('layouts.front', compact('posts'));
     }
 
-    // public function singlePost($id)
-    // {
-    //     $post = Post::findOrfail($id);
-    //     return view('front.blog.single_post', compact('post'));
-    // }
+    public function singlePost($slug)
+    {
+        $post = Post::where('slug',$slug)->first();
+
+        return view('front.blog.single_post', compact('post'));
+    }
 }

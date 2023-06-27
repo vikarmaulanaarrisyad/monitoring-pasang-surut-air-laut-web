@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [FrontController::class, 'index']);
-// Route::get('/post/{id}',[FrontController::class,'singlePost'])->name('single_post');
+Route::get('/post/{slug}',[FrontController::class,'singlePost'])->name('single_post');
 
 Route::group([
     'middleware' => ['auth', 'role:admin,user'],
