@@ -10,7 +10,7 @@
     <meta name="author" content="Grayrids">
     <title>Monitoring Ketinggian Air</title>
     <!--====== Favicon Icon ======-->
-    <link rel="shortcut icon" href="{{ asset('frontend') }}/img/logo2.jpg" type="image/png">
+    <link rel="shortcut icon" href="{{ asset('images/icon.jpg') }}" type="image/png">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{ asset('frontend') }}/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('frontend') }}/css/animate.css">
@@ -270,7 +270,7 @@
                             <div class="blog-item-img">
                                 <a href="javascript:void(0)">
                                     <img src="{{ Storage::url($post->path_image) }}" class="img-fluid"
-                                        alt="">
+                                        alt="" width="150px" height="100px">
                                 </a>
                             </div>
                             <div class="blog-item-text">
