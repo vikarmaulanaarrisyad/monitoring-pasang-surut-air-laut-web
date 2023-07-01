@@ -108,7 +108,7 @@
                 updateKecepatanChart();
                 updateDataSuhu();
                 updateDataHumidity();
-            }, 2000);
+            }, 1000);
         });
     </script>
 @endpush
