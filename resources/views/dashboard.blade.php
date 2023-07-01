@@ -51,23 +51,255 @@
             </div>
         </section>
     </div>
+
+    <div class="row">
+        <!-- Left col -->
+        <section class="col-lg-6 connectedSortable">
+            <!-- Custom tabs (Charts with tabs)-->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-chart-line mr-1"></i>
+                        Monitoring Suhu
+                    </h3>
+                </div><!-- /.card-header -->
+                <div class="card-body pt-0">
+                    <div id="suhu" style="height: 300px"></div>
+                </div><!-- /.card-body -->
+            </div>
+        </section>
+        <section class="col-lg-6 connectedSortable">
+            <!-- Custom tabs (Charts with tabs)-->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-chart-line mr-1"></i>
+                        Monitoring Kelembapan
+                    </h3>
+                </div><!-- /.card-header -->
+                <div class="card-body pt-0">
+                    <div id="humidity" style="height: 300px"></div>
+                </div><!-- /.card-body -->
+            </div>
+        </section>
+
+    </div>
 @endsection
 
 @push('scripts_vendor')
     <script src="{{ asset('/AdminLTE/plugins/daterangepicker/daterangepicker.js') }}"></script>
+    <script src="{{ asset('AdminLTE/plugins') }}/code/highcharts.js"></script>
+    <script src="{{ asset('AdminLTE/plugins') }}/code/modules/exporting.js"></script>
+    <script src="{{ asset('AdminLTE/plugins') }}/code/modules/export-data.js"></script>
+    <script src="{{ asset('AdminLTE/plugins') }}/code/modules/accessibility.js"></script>
+
+    <!-- Include Moment.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <!-- Include Moment Timezone plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone-with-data.min.js"></script>
 @endpush
 
 @push('scripts')
     <script>
         $(document).ready(function() {
+            updateDataSuhu();
             // Mengupdate grafik setiap 5 detik
-            setInterval(() => {
-                updateKetinggianChart();
-                updateKecepatanChart();
+            // setInterval(() => {
+            //     updateKetinggianChart();
+            //     updateKecepatanChart();
 
-            }, 1000);
+            // }, 1000);
+        });
+    </script>
+@endpush
+
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Highcharts.chart('suhu', {
+                chart: {
+                    type: 'line',
+                    animation: true,
+                },
+                title: {
+                    text: 'Monitoring Data Suhu'
+                },
+
+                xAxis: {
+                    categories: [],
+                    type: 'datetime',
+                    crosshair: true, // Use datetime type for the x-axis
+                    labels: {
+                        format: '{value:%H:%M}' // Format the x-axis labels as hours and minutes
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: 'Temperature (°C)'
+                    },
+                    crosshair: true
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: true,
+                            format: '{y} °C'
+                        },
+                        enableMouseTracking: false
+                    }
+                },
+                tooltip: {
+                    backgroundColor: '#FCFFC5',
+                    borderColor: 'black',
+                    borderRadius: 10,
+                    borderWidth: 3,
+                    formatter: function() {
+                        return 'The value for <b>' + this.x + '</b> is <b>' + this.y +
+                            '</b>, in series ' + this.series.name;
+                    }
+                },
+                responsive: {
+                    rules: [{
+                        condition: {
+                            maxWidth: 500
+                        },
+                        chartOptions: {
+                            legend: {
+                                enabled: false
+                            }
+                        }
+                    }]
+                },
+                series: [{
+                    name: 'Waktu',
+                    data: [0],
+                }, ]
+            });
         });
 
+
+        function updateDataSuhu() {
+            $.ajax({
+                type: "GET",
+                url: '{{ route('api.suhu.data') }}',
+                dataType: "json",
+                success: function(response) {
+                    var chart = Highcharts.charts[0];
+
+                    var suhu = response.data.map(item => item.suhu);
+                    var tanggal = response.data.map(item => item.tanggal);
+
+
+                    // Set the name of the series to the current date
+                    var currentDate = new Date();
+                    var formattedTime = currentDate.toLocaleTimeString();
+
+                    // Update the series data
+                    chart.xAxis[0].setCategories(tanggal);
+
+                    chart.series[0].setData(suhu);
+                    chart.series[0].setName(formattedTime);
+
+                    // Redraw the chart with the updated data
+                    chart.redraw();
+                }
+            });
+        }
+    </script>
+@endpush
+
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            updateDataHumidity();
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            Highcharts.chart('humidity', {
+                chart: {
+                    type: 'line',
+                    animation: true,
+                },
+                title: {
+                    text: 'Monitoring Data Kelembaban'
+                },
+
+                xAxis: {
+                    categories: [],
+                    type: 'datetime',
+                    crosshair: true, // Use datetime type for the x-axis
+                    labels: {
+                        format: '{value:%H:%M}' // Format the x-axis labels as hours and minutes
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: 'Humidity (%)'
+                    },
+                    crosshair: true
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: true,
+                            format: '{y} °%'
+                        },
+                        enableMouseTracking: false
+                    }
+                },
+                
+                responsive: {
+                    rules: [{
+                        condition: {
+                            maxWidth: 500
+                        },
+                        chartOptions: {
+                            legend: {
+                                enabled: false
+                            }
+                        }
+                    }]
+                },
+                series: [{
+                    name: 'Waktu',
+                    data: [0],
+                }, ]
+            });
+        });
+
+
+        function updateDataHumidity() {
+            $.ajax({
+                type: "GET",
+                url: '{{ route('api.humidity.data') }}',
+                dataType: "json",
+                success: function(response) {
+                    var chart1 = Highcharts.charts[1];
+
+                    var humidity = response.data.map(item => item.kelembaban);
+                    var tanggal = response.data.map(item => item.tanggal);
+
+
+                    // Set the name of the series to the current date
+                    var currentDate = new Date();
+                    var formattedTime = currentDate.toLocaleTimeString();
+
+                    // Update the series data
+                    chart1.xAxis[0].setCategories(tanggal);
+
+                    chart1.series[0].setData(humidity);
+                    chart1.series[0].setName(formattedTime);
+
+                    // Redraw the chart with the updated data
+                    chart1.redraw();
+                }
+            });
+        }
+    </script>
+@endpush
+
+@push('scripts')
+    <script>
         // Ketinggian air chart
         var ketinggianChartCanvas = document.getElementById('ketinggian').getContext('2d');
 
@@ -174,20 +406,11 @@
                 dataType: 'json',
                 success: function(response) {
                     var data = response.data;
-                    // variabel untuk menampung tinggi aquarium
-                    var tinggiMaxAquarium = 2500;
-                    // mengukur tinggi air
-                    var tinggiAir = tinggiMaxAquarium - data.sensor;
-                    // presentasi ketinggian air
-                    var presentaseTinggiAir = (tinggiAir/tinggiMaxAquarium)*100; // hasil
-
-                    // Mengubah data ketinggian air menjadi integer atau dibulatkan
-                    var roundedKetinggian = Math.round(presentaseTinggiAir);
-
+                    var air = data.sensor;
                     // Mengupdate label dan data pada chart ketinggian air
-                    ketinggianChart.data.labels = [roundedKetinggian];
+                    ketinggianChart.data.labels = [air];
                     ketinggianChart.data.datasets[0].label = [data.status];
-                    ketinggianChart.data.datasets[0].data = [roundedKetinggian];
+                    ketinggianChart.data.datasets[0].data = [air];
 
                     // Mengupdate warna latar belakang chart ketinggian air berdasarkan status
                     var ketinggianBackgroundColor;

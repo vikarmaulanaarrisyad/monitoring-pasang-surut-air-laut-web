@@ -119,4 +119,18 @@ class SensorLaravelController extends Controller
             ], 401);
         }
     }
+
+    public function getDataSuhu()
+    {
+        $suhu = Sensor::offset(2)->take(5)->get();
+
+        return response()->json(['data' => $suhu]);
+    }
+
+    public function getDataHumidity()
+    {
+        $suhu = Sensor::offset(2)->take(5)->get();
+
+        return response()->json(['data' => $suhu]);
+    }
 }

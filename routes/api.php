@@ -29,3 +29,5 @@ Route::get('/sensor/{sensor}/status/{status}',[SensorLaravelController::class, '
 
 Route::post('/kirim_data', [SensorLaravelController::class, 'kirimDataSensor']);
 
+Route::get('/suhu/data',[SensorLaravelController::class, 'getDataSuhu'])->name('api.suhu.data');
+Route::get('/humidity/data',[SensorLaravelController::class, 'getDataHumidity'])->name('api.humidity.data');
