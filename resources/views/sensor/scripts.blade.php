@@ -32,6 +32,12 @@
                     data: 'weend_speed'
                 },
                 {
+                    data: 'suhu'
+                },
+                {
+                    data: 'humidity'
+                },
+                {
                     data: 'status',
                     sortable: false,
                     searchable: false

@@ -57,6 +57,8 @@
                             <th>Waktu</th>
                             <th>Tinggi Air</th>
                             <th>Kecepatan</th>
+                            <th>Suhu</th>
+                            <th>Humidity</th>
                             <th>Status</th>
                         </tr>
                     </x-slot>

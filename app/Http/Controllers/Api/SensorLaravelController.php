@@ -24,11 +24,11 @@ class SensorLaravelController extends Controller
 
             $sensor = Sensor::when($request->datefilter != "", function ($query) use ($start_date, $end_date) {
                 $query->whereBetween('tanggal', [$start_date, $end_date]);
-            });
+            })->orderBy('id', 'DESC');
         } else {
             $sensor = Sensor::when($request->has('status') != "" && $request->status != "", function ($query) use ($request) {
                 $query->where('status', $request->status);
-            });
+            })->orderBy('id','DESC');
         }
 
         // return response()->json(['data' => $sensor]);
@@ -45,6 +45,12 @@ class SensorLaravelController extends Controller
             })
             ->editColumn('weend_speed', function ($sensor) {
                 return $sensor->weend_speed . ' m/s';
+            })
+            ->editColumn('suhu', function ($sensor) {
+                return $sensor->suhu . ' °C';
+            })
+            ->editColumn('humidity', function ($sensor) {
+                return $sensor->kelembaban . ' %';
             })
             ->editColumn('status', function ($sensor) {
                 return '

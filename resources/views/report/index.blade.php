@@ -12,7 +12,7 @@
 
 <body>
 
-    <h4 class="text-center">Laporan Data Ketinggian Air dan Kecepatan Angin </h4>
+    <h4 class="text-center">Laporan Data Monitoring </h4>
     <p class="text-center">
         Tanggal {{ tanggal_indonesia($start) }}
         s/d
@@ -26,6 +26,8 @@
                 <th width="30%">Tanggal</th>
                 <th width="20%">Ketinggian</th>
                 <th width="10%">Kecepatan</th>
+                <th width="10%">Suhu</th>
+                <th width="10%">Kelembaban</th>
             </tr>
         </thead>
         <tbody>

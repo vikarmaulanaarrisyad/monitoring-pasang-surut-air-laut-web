@@ -21,6 +21,8 @@ class ReportController extends Controller
                 'tanggal' => '',
                 'ketinggian' => '',
                 'kecepatan' => '',
+                'suhu' => '',
+                'humidity' => '',
             ];
         } else {
             foreach ($sensors as $sensor) {
@@ -29,6 +31,8 @@ class ReportController extends Controller
                 $row['tanggal'] = tanggal_indonesia($sensor->created_at, strtotime($sensor->created_at)) . ' ' . date('H:I:s', strtotime($sensor->created_at));
                 $row['ketinggian'] = $sensor->sensor . ' cm <br> dari permukaan air';
                 $row['kecepatan'] = $sensor->weend_speed . ' m/s';
+                $row['suhu'] = $sensor->suhu . ' °C';
+                $row['humidity'] = $sensor->kelembaban . ' %';
 
                 $data[] = $row;
             }
@@ -42,6 +46,6 @@ class ReportController extends Controller
         $data = $this->getData($start, $end);
         $pdf = PDF::loadView('report.index', compact('start', 'end', 'data'));
 
-        return $pdf->stream('Laporan-monitoring-data-ketingian-kecepatan-' . date('Y-m-d-his') . '.pdf');
+        return $pdf->download('Laporan_monitoring_data_' . date('Y-m-d-his') . '.pdf');
     }
 }
