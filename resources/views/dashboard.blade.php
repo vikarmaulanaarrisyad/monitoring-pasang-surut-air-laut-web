@@ -102,13 +102,13 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            updateDataSuhu();
             // Mengupdate grafik setiap 5 detik
-            // setInterval(() => {
-            //     updateKetinggianChart();
-            //     updateKecepatanChart();
-
-            // }, 1000);
+            setInterval(() => {
+                updateKetinggianChart();
+                updateKecepatanChart();
+                updateDataSuhu();
+                updateDataHumidity();
+            }, 2000);
         });
     </script>
 @endpush
@@ -211,9 +211,6 @@
 
 @push('scripts')
     <script>
-        $(document).ready(function() {
-            updateDataHumidity();
-        });
         document.addEventListener('DOMContentLoaded', function() {
             Highcharts.chart('humidity', {
                 chart: {
@@ -247,7 +244,7 @@
                         enableMouseTracking: false
                     }
                 },
-                
+
                 responsive: {
                     rules: [{
                         condition: {
