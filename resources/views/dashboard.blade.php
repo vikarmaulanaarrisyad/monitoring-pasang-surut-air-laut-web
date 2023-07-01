@@ -311,7 +311,7 @@
                 pointStrokeColor: 'rgba(60,141,188,1)',
                 pointHighlightFill: '#fff',
                 pointHighlightStroke: 'rgba(60,141,188,1)',
-                data: [],
+                data: [0],
                 borderWidth: 2,
             }]
         };
@@ -362,7 +362,7 @@
                     pointStrokeColor: 'rgba(60,141,188,1)',
                     pointHighlightFill: '#fff',
                     pointHighlightStroke: 'rgba(60,141,188,1)',
-                    data: []
+                    data: [0]
                 },
 
             ]

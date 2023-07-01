@@ -13,7 +13,7 @@
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
                 @if (Storage::disk('public')->exists(auth()->user()->avatar))
-                    <img src="{{ Storage::url(auth()->user()->avatar) }}" alt="" class="img-circle elevation-2">
+                    <img src="{{ Storage::url(auth()->user()->avatar) }}" alt="" class="img-circle elevation-2" style="width: 40px; height:40px ">
                 @else
                     <img src="{{ asset('AdminLTE/dist/img/user1-128x128.jpg') }}" alt=""
                         class="img-circle elevation-2">
