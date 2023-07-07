@@ -102,14 +102,10 @@
     <script>
         $(document).ready(function() {
 
-            updateData();
             // Mengupdate grafik setiap 5 detik
-            // setInterval(() => {
-            //     // updateKetinggianChart();
-            //     // updateKecepatanChart();
-            //     // updateDataSuhu();
-            //     // updateDataHumidity();
-            // }, 5000);
+            setInterval(() => {
+                updateData();
+            }, 3000);
         });
     </script>
 @endpush
@@ -150,23 +146,17 @@
         }
 
         function updateKecepatanAngin(data) {
-            const chart = Highcharts.charts[0];
-            const point = chart.series[0].points[0];
-
-            console.log(data);
-            let newVal = data.weend_speed;
-
-            point.update(newVal);
+            var chartSpeed = Highcharts.charts[1];
+            var point = chartSpeed.series[0].points[0];
+            var weend = data.weend_speed;
+            point.update(weend);
         }
 
         function updateSuhu(data) {
-            const chart = Highcharts.charts[1];
-            const point = chart.series[0].points[0];
-
-            console.log(data);
-            let newVal = data.suhu;
-
-            point.update(newVal);
+           var chartSuhu = Highcharts.charts[2];
+                var point = chartSuhu.series[0].points[0];
+                var newVal = data.suhu;
+                point.update(newVal);
         }
 
         function updateHumidity(data) {
