@@ -67,8 +67,8 @@
                                         <th>Waktu</th>
                                         <th>Ketinggian Air</th>
                                         <th>Kecepatan Angin</th>
-                                        <th>Kelembaban</th>
                                         <th>Suhu</th>
+                                        <th>Kelembaban</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -78,8 +78,8 @@
                                         <td>{{ $sensor->created_at }}</td>
                                         <td>{{ $sensor->sensor }}</td>
                                         <td>{{ $sensor->weend_speed }}</td>
-                                        <td>{{ $sensor->sensor }}</td>
-                                        <td>{{ $sensor->weend_speed }}</td>
+                                        <td>{{ $sensor->suhu }}</td>
+                                        <td>{{ $sensor->kelembaban }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>
