@@ -23,22 +23,26 @@ class SensorLaravelController extends Controller
 
     public function getDataSensor(Request $request)
     {
-        $date_range = $request->input('datefilter');
-        if (strpos($date_range, ' - ') !== false) {
+        // $date_range = $request->input('datefilter');
+        // if (strpos($date_range, ' - ') !== false) {
 
-            $date_parts = explode(' - ', $date_range);
+        //     $date_parts = explode(' - ', $date_range);
 
-            $start_date  = $date_parts[0];
-            $end_date  = $date_parts[1];
+        //     $start_date  = $date_parts[0];
+        //     $end_date  = $date_parts[1];
 
-            $sensor = Sensor::when($request->datefilter != "", function ($query) use ($start_date, $end_date) {
-                $query->whereBetween('tanggal', [$start_date, $end_date]);
-            })->orderBy('id', 'DESC');
-        } else {
-            $sensor = Sensor::when($request->has('status') != "" && $request->status != "", function ($query) use ($request) {
-                $query->where('status', $request->status);
-            })->orderBy('id', 'DESC');
-        }
+        //     $sensor = Sensor::when($request->datefilter != "", function ($query) use ($start_date, $end_date) {
+        //         $query->whereBetween('tanggal', [$start_date, $end_date]);
+        //     })->orderBy('id', 'DESC');
+        // } else {
+        //     $sensor = Sensor::when($request->has('status') != "" && $request->status != "", function ($query) use ($request) {
+        //         $query->where('status', $request->status);
+        //     })->orderBy('id', 'DESC');
+        // }
+
+        $sensor = Sensor::when($request->has('status') != "" && $request->status != "", function ($query) use ($request) {
+            $query->where('status', $request->status);
+        })->orderBy('id','DESC');
 
         // return response()->json(['data' => $sensor]);
         return datatables($sensor)
