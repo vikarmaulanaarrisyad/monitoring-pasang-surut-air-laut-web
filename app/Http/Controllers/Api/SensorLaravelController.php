@@ -81,6 +81,8 @@ class SensorLaravelController extends Controller
             'sensor' => $request->sensor,
             'status' => $request->status,
             'weend_speed'   => $request->weend_speed,
+            'suhu'   => $request->suhu,
+            'kelembaban'   => $request->kelembaban,
         ];
 
         Sensor::create($data);
@@ -111,6 +113,8 @@ class SensorLaravelController extends Controller
             'sensor'     => $request->input('distance'),
             'weend_speed'   => $request->input('weend_speed'),
             'status'   => $request->input('status'),
+            'suhu'   => $request->input('suhu'),
+            'kelembaban'   => $request->input('kelembaban'),
         ]);
 
         if ($post) {
