@@ -12,6 +12,15 @@ use Illuminate\Support\Facades\Validator;
 
 class SensorLaravelController extends Controller
 {
+
+    public function getAllData(Request $request)
+    {
+        $result = Sensor::orderBy('id','DESC')->first();
+
+        return $result;
+    }
+
+
     public function getDataSensor(Request $request)
     {
         $date_range = $request->input('datefilter');
@@ -28,7 +37,7 @@ class SensorLaravelController extends Controller
         } else {
             $sensor = Sensor::when($request->has('status') != "" && $request->status != "", function ($query) use ($request) {
                 $query->where('status', $request->status);
-            })->orderBy('id','DESC');
+            })->orderBy('id', 'DESC');
         }
 
         // return response()->json(['data' => $sensor]);
