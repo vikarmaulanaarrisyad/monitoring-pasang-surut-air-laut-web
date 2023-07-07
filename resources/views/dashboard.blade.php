@@ -282,7 +282,7 @@
                     endAngle: 89.9,
                     background: null,
                     center: ['50%', '75%'],
-                    size: '140%'
+                    size: '120%'
                 },
 
                 // the value axis
