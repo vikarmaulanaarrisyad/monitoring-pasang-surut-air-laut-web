@@ -112,7 +112,7 @@
                         <div class="icon">
                             <i class="lni-brush"></i>
                         </div>
-                        <h4>Anemomete</h4>
+                        <h4>Anemometer</h4>
                         <p class="text-justify">
                             Anemometer adalah sebuah alat pengujian atau biasa disebut alat pengukur kecepatan angin
                             yang biasanya digunakan dalam bidang Meteorologi dan Geofisika atau stasiun prakiraan cuaca.
@@ -129,13 +129,14 @@
                         <div class="icon">
                             <i class="lni-heart"></i>
                         </div>
-                        <h4>ESP8266</h4>
+                        <h4>ESP32</h4>
                         <p class="text-justify">
-                            ESP8266 merupakan modul wifi yang berfungsi sebagai perangkat tambahan mikrokontroler
-                            seperti Arduino agar dapat terhubung langsung dengan wifi dan membuat koneksi TCP/IP.
-                            Modul ini membutuhkan daya sekitar 3.3v dengan memiliki tiga mode wifi yaitu Station, Access
-                            Point dan Both (Keduanya). Modul ini juga dilengkapi dengan prosesor, memori dan GPIO dimana
-                            jumlah pin bergantung dengan jenis ESP8266 yang kita gunakan.
+                            ESP32 adalah mikrokontroler yang dikenalkan oleh Espressif System dan merupakan penerus dari
+                            mikrokontroler ESP8266.
+                            Pada mikrokontroler ini sudah tersedia modul WiFi dan Bluetooth dalam chip sehingga sangat
+                            mendukung untuk membuat sistem aplikasi Internet of Things.
+                            ESP32 memiliki fitur yang cukup lengkap karena mendukung input/output Analog dan Digital,
+                            PWM, SPI, I2C, dll.
                         </p>
                     </div>
                 </div>
