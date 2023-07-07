@@ -153,10 +153,10 @@
         }
 
         function updateSuhu(data) {
-           var chartSuhu = Highcharts.charts[2];
-                var point = chartSuhu.series[0].points[0];
-                var newVal = data.suhu;
-                point.update(newVal);
+            var chartSuhu = Highcharts.charts[2];
+            var point = chartSuhu.series[0].points[0];
+            var newVal = data.suhu;
+            point.update(newVal);
         }
 
         function updateHumidity(data) {

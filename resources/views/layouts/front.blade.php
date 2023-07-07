@@ -194,7 +194,7 @@
                             <h2 class="section-title">Statistik</h2>
                             <div class="desc-text">
                                 <p>
-                                    Statistik Monitoring
+                                    Data Statistik Monitoring
                                 </p>
                             </div>
                         </div>
@@ -204,16 +204,14 @@
             </div>
             <!-- End Row -->
             <!-- Start Row -->
-            <div class="row featured-bg">
+            <div class="row">
                 <!-- Start Col -->
-                <div class="col-lg-6 col-md-6 col-xs-12 p-0">
+                <div class="col-md-6 col-lg-6 p-0">
                     <!-- Start Fetatures -->
-                    <div class="feature-item featured-border1">
-                        <div class="feature-icon float-left">
-                            <i class="lni-coffee-cup"></i>
-                        </div>
-                        <div class="feature-info float-left">
-                            <h4>Kecepatan Angin</h4>
+                    <div class="feature-item">
+
+                        <div class="feature-info">
+                            <h4 style="font-size: 2em; text-align: center">Kecepatan Angin</h4>
                             <p>
                             <div id="container" style="width:100%; height:400px;"></div>
                             </p>
@@ -222,17 +220,41 @@
                     <!-- End Fetatures -->
                 </div>
                 <!-- Start Col -->
-                <div class="col-lg-6 col-md-6 col-xs-12 p-0">
+                <div class="col-md-6">
                     <!-- Start Fetatures -->
                     <div class="feature-item featured-border1">
-                        <div class="feature-icon float-left">
-                            <i class="lni-coffee-cup"></i>
-                        </div>
-                        <div class="feature-info float-left">
-                            <h4>Ketinggian Air</h4>
+                        <div class="feature-info">
+                            <h4 style="font-size: 2em; text-align: center">Ketinggian Air</h4>
                             <p>
                             <div id="container2" style="width:100%; height:400px;"></div>
                             </p>
+                        </div>
+                    </div>
+                    <!-- End Fetatures -->
+                </div>
+            </div>
+            <div class="row">
+                <!-- Start Col -->
+                <div class="col-md-6">
+                    <!-- Start Fetatures -->
+                    <div class="feature-item featured-border1">
+
+                        <div class="feature-info ">
+                            <h4 style="font-size: 2em; text-align: center">Suhu</h4>
+                            <p>
+                            <div id="container3" style="width:100%; height:400px;"></div>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- End Fetatures -->
+                </div>
+                <!-- Start Col -->
+                <div class="col-md-6">
+                    <!-- Start Fetatures -->
+                    <div class="feature-item featured-border1">
+                        <div class="feature-info">
+                            <h4 style="font-size: 2em; text-align: center">Kelembaban</h4>
+                            <canvas id="myChart"></canvas>
                         </div>
                     </div>
                     <!-- End Fetatures -->
@@ -359,6 +381,8 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
         Highcharts.chart('container', {
@@ -369,7 +393,7 @@
                 plotBackgroundImage: null,
                 plotBorderWidth: 0,
                 plotShadow: false,
-                height: '90%'
+                height: '65%'
             },
 
             title: {
@@ -387,7 +411,7 @@
             // the value axis
             yAxis: {
                 min: 0,
-                max: 50,
+                max: 200,
                 tickPixelInterval: 72,
                 tickPosition: 'inside',
                 tickColor: Highcharts.defaultOptions.chart.backgroundColor || '#FFFFFF',
@@ -397,23 +421,23 @@
                 labels: {
                     distance: 20,
                     style: {
-                        fontSize: '14px'
+                        fontSize: '12px'
                     }
                 },
                 lineWidth: 0,
                 plotBands: [{
                     from: 0,
-                    to: 10,
+                    to: 50,
                     color: '#55BF3B', // green
                     thickness: 20
                 }, {
-                    from: 10,
-                    to: 25,
+                    from: 50,
+                    to: 100,
                     color: '#DDDF0D', // yellow
                     thickness: 20
                 }, {
-                    from: 25,
-                    to: 50,
+                    from: 100,
+                    to: 200,
                     color: '#DF5353', // red
                     thickness: 20
                 }]
@@ -434,7 +458,7 @@
                         Highcharts.defaultOptions.title.style.color
                     ) || '#333333',
                     style: {
-                        fontSize: '16px'
+                        fontSize: '14px'
                     }
                 },
                 dial: {
@@ -488,11 +512,7 @@
             title: {
                 text: 'Ketinggian Air'
             },
-            subtitle: {
-                text: 'Source: ' +
-                    '<a href="https://en.wikipedia.org/wiki/List_of_cities_by_average_temperature" ' +
-                    'target="_blank">Wikipedia.com</a>'
-            },
+
             xAxis: {
                 categories: []
             },
@@ -548,6 +568,12 @@
                                 duration: 1000 // Durasi animasi dalam milidetik
                             }
                         });
+                        chart.series[0].update({
+                            data: sensor,
+                            animation: {
+                                duration: 1000 // Durasi animasi dalam milidetik
+                            }
+                        });
                         chart.xAxis[0].update({
                             categories: categories,
                             animation: {
@@ -555,6 +581,7 @@
                             }
                         });
                     }
+
                 },
                 error: function(xhr, status, error) {
                     // Terjadi kesalahan dalam mengambil data dari sumber eksternal
@@ -566,6 +593,161 @@
         // Memanggil fungsi getSensorData setiap 3 detik (interval polling)
         setInterval(getSensorData, 2000);
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Highcharts.chart('container3', {
+                chart: {
+                    type: 'gauge',
+                    plotBackgroundColor: null,
+                    plotBackgroundImage: null,
+                    plotBorderWidth: 0,
+                    plotShadow: false,
+                    height: '65%'
+                },
+
+                title: {
+                    text: ''
+                },
+
+                pane: {
+                    startAngle: -90,
+                    endAngle: 89.9,
+                    background: null,
+                    center: ['50%', '75%'],
+                    size: '120%'
+                },
+
+                // the value axis
+                yAxis: {
+                    min: 0,
+                    max: 100,
+                    tickPixelInterval: 72,
+                    tickPosition: 'inside',
+                    tickColor: Highcharts.defaultOptions.chart.backgroundColor || '#FFFFFF',
+                    tickLength: 20,
+                    tickWidth: 2,
+                    minorTickInterval: null,
+                    labels: {
+                        distance: 20,
+                        style: {
+                            fontSize: '14px'
+                        }
+                    },
+                    lineWidth: 0,
+                    plotBands: [{
+                        from: 0,
+                        to: 10,
+                        color: '#55BF3B', // green
+                        thickness: 20
+                    }, {
+                        from: 10,
+                        to: 30,
+                        color: '#DDDF0D', // yellow
+                        thickness: 20
+                    }, {
+                        from: 30,
+                        to: 100,
+                        color: '#DF5353', // red
+                        thickness: 20
+                    }]
+                },
+
+                series: [{
+                    name: 'Suhu',
+                    data: [0],
+                    tooltip: {
+                        valueSuffix: ' °C'
+                    },
+                    dataLabels: {
+                        format: '{y} °C',
+                        borderWidth: 0,
+                        color: (
+                            Highcharts.defaultOptions.title &&
+                            Highcharts.defaultOptions.title.style &&
+                            Highcharts.defaultOptions.title.style.color
+                        ) || '#333333',
+                        style: {
+                            fontSize: '16px'
+                        }
+                    },
+                    dial: {
+                        radius: '80%',
+                        backgroundColor: 'gray',
+                        baseWidth: 12,
+                        baseLength: '0%',
+                        rearLength: '0%'
+                    },
+                    pivot: {
+                        backgroundColor: 'gray',
+                        radius: 6
+                    }
+
+                }]
+
+            });
+
+            function updateDataSuhu() {
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('ajax.getAllData') }}",
+                    dataType: "json",
+                    success: function(response) {
+                        var chartSuhu = Highcharts.charts[2];
+                        var point = chartSuhu.series[0].points[0];
+                        var newVal = response.suhu;
+                        point.update(newVal);
+                    }
+                });
+            }
+
+             setInterval(updateDataSuhu, 2000); // Contoh: memperbarui setiap 5 detik
+        });
+    </script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('myChart');
+            const chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Humidity',
+                        data: [0],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            function updateChart() {
+                // Menggunakan AJAX untuk mengambil data terbaru dari Laravel
+                $.ajax({
+                    type: "GET",
+                    url: '{{ route('ajax.getAllData') }}',
+                    dataType: "json",
+                    success: function(response) {
+                        chart.data.labels.push('');
+                        chart.data.datasets[0].data.push(response.kelembaban);
+                        chart.update();
+                    }
+                });
+
+            }
+
+            // Panggil fungsi updateChart setiap beberapa detik
+            setInterval(updateChart, 2000); // Contoh: memperbarui setiap 5 detik
+        });
+    </script>
+
 
 </body>
 
