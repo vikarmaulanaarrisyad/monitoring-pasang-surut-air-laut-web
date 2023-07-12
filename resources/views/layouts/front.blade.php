@@ -69,10 +69,10 @@
                 <div class="col-lg-6 col-md-12 col-xs-12">
                     <div class="contents">
                         <h2 class="head-title">Sistem Monitoring Pasang Surut Air Laut</h2>
-                        <p>
+                        {{-- <p>
                             PASCAL MAULANA HERMANSYAH <br>
                             APRI NUR ABDUL KHALIM
-                        </p>
+                        </p> --}}
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-12 col-xs-12 p-0">
@@ -348,6 +348,11 @@
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+       <!-- Include Moment.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <!-- Include Moment Timezone plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone-with-data.min.js"></script>
 
     <script>
         Highcharts.chart('container', {
@@ -666,7 +671,7 @@
                 });
             }
 
-             setInterval(updateDataSuhu, 5000); // Contoh: memperbarui setiap 5 detik
+            setInterval(updateDataSuhu, 5000); // Contoh: memperbarui setiap 5 detik
         });
     </script>
 
@@ -700,8 +705,16 @@
                     url: '{{ route('ajax.getAllData') }}',
                     dataType: "json",
                     success: function(response) {
-                        chart.data.labels.push('');
+                        let createdAt = moment(response.created_at);
+                        let waktu = createdAt.format('HH:mm:ss');
+                        chart.data.labels.push(waktu);
                         chart.data.datasets[0].data.push(response.kelembaban);
+
+                        if (chart.data.datasets[0].data.length >= 10) {
+                            chart.data.labels.shift();
+                            chart.data.datasets[0].data.shift();
+                        }
+
                         chart.update();
                     }
                 });

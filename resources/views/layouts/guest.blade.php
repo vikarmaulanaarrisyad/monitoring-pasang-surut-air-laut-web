@@ -31,7 +31,7 @@
             min-height: 100vh;
         }
         .bg-image {
-            background-image: url('{{ asset("images/infosec.jpeg.jpg") }}');
+            background-image: url('{{ asset("images/login-page.jpeg") }}');
             background-size: cover;
             background-position: center;
         }
