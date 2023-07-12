@@ -9,6 +9,11 @@ class Sensor extends Model
     use HasFactory;
     protected $table = 'sensor';
 
+    public function scopeHumidity($query)
+    {
+        $query->where('id','DESC');
+    }
+
     public function statusColor()
     {
         $color = '';

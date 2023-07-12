@@ -74,6 +74,13 @@ class SensorLaravelController extends Controller
             ->make(true);
     }
 
+    public function getLatestData()
+    {
+        $data = Sensor::orderBy('created_at', 'asc')->limit(10)->take(5)->get();
+
+        return response()->json(['data' => $data]);
+    }
+
     public function getSingleDataSensor()
     {
         $sensor = Sensor::latest()->orderBy('created_at', 'DESC')->first();
@@ -82,7 +89,7 @@ class SensorLaravelController extends Controller
 
     public function data_multiple()
     {
-        $sensor = Sensor::orderBy('created_at', 'ASC')->take(6)->get();
+        $sensor = Sensor::all();
 
         return response()->json(['data' => $sensor]);
     }
@@ -152,7 +159,10 @@ class SensorLaravelController extends Controller
 
     public function getDataHumidity()
     {
-        $suhu = Sensor::offset(2)->take(5)->get();
+        $suhu = Sensor::all();
+
+        dd($suhu);
+        // $suhu = Sensor::offset(2)->take(5)->get();
 
         return response()->json(['data' => $suhu]);
     }

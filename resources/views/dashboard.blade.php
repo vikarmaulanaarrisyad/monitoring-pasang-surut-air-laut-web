@@ -20,14 +20,13 @@
                 <div class="card-header">
                     <h3 class="card-title">
                         <i class="fas fa-chart-line mr-1"></i>
-                        Monitoring Ketinggian Air Laut
+                        Grafik Ketinggian Air
                     </h3>
-                </div><!-- /.card-header -->
-                <div class="card-body text-center pb-0">
-
                 </div>
+
                 <div class="card-body pt-0">
-                    <canvas id="ketinggian" height="300" style="height: 300px;"></canvas>
+                    <canvas id="ketinggian"style="height: 300px;"></canvas>
+
                 </div><!-- /.card-body -->
             </div>
             <!-- /.card -->
@@ -39,11 +38,11 @@
                 <div class="card-header">
                     <h3 class="card-title">
                         <i class="fas fa-chart-line mr-1"></i>
-                        Monitoring Kecepatan Angin
+                        Grafik Kecepatan Angin
                     </h3>
                 </div><!-- /.card-header -->
                 <div class="card-body">
-                    <div id="kecepatan" style="height: 300px;"></div>
+                    <canvas id="kecepatan" height="220px" style="height: 280px;"></canvas>
                 </div><!-- /.card-body -->
             </div>
         </section>
@@ -57,12 +56,12 @@
                 <div class="card-header">
                     <h3 class="card-title">
                         <i class="fas fa-chart-line mr-1"></i>
-                        Monitoring Suhu
+                        Grafik Suhu
                     </h3>
                 </div><!-- /.card-header -->
                 <div class="card-body pt-0">
-                    <div id="suhu" style="height: 300px"></div>
-                </div><!-- /.card-body -->
+                    <canvas id="suhu" height="220px"></canvas>
+                </div>
             </div>
         </section>
         <section class="col-lg-6 connectedSortable">
@@ -71,11 +70,12 @@
                 <div class="card-header">
                     <h3 class="card-title">
                         <i class="fas fa-chart-line mr-1"></i>
-                        Monitoring Kelembapan
+                        Grafik Kelembapan
                     </h3>
                 </div><!-- /.card-header -->
                 <div class="card-body pt-0">
-                    <div id="humidity" style="height: 300px"></div>
+                    <canvas id="humidity" height="220px"></canvas>
+
                 </div><!-- /.card-body -->
             </div>
         </section>
@@ -85,13 +85,6 @@
 
 @push('scripts_vendor')
     <script src="{{ asset('/AdminLTE/plugins/daterangepicker/daterangepicker.js') }}"></script>
-    <script src="{{ asset('AdminLTE/plugins') }}/code/highcharts.js"></script>
-    <script src="https://code.highcharts.com/highcharts-more.js"></script>
-    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
-    <script src="{{ asset('AdminLTE/plugins') }}/code/modules/exporting.js"></script>
-    <script src="{{ asset('AdminLTE/plugins') }}/code/modules/export-data.js"></script>
-    <script src="{{ asset('AdminLTE/plugins') }}/code/modules/accessibility.js"></script>
-
     <!-- Include Moment.js library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <!-- Include Moment Timezone plugin -->
@@ -105,7 +98,7 @@
             // Mengupdate grafik setiap 5 detik
             setInterval(() => {
                 updateData();
-            }, 3000);
+            }, 2000);
         });
     </script>
 @endpush
@@ -120,9 +113,6 @@
                 dataType: "json",
                 success: function(response) {
                     updateKetinggianAir(response);
-                    updateKecepatanAngin(response);
-                    updateSuhu(response);
-                    updateHumidity(response);
                 }
             });
         }
@@ -143,28 +133,6 @@
 
             ketinggianChart.data.datasets[0].backgroundColor = [ketinggianColor];
             ketinggianChart.update();
-        }
-
-        function updateKecepatanAngin(data) {
-            var chartSpeed = Highcharts.charts[1];
-            var point = chartSpeed.series[0].points[0];
-            var weend = data.weend_speed;
-            point.update(weend);
-        }
-
-        function updateSuhu(data) {
-            var chartSuhu = Highcharts.charts[2];
-            var point = chartSuhu.series[0].points[0];
-            var newVal = data.suhu;
-            point.update(newVal);
-        }
-
-        function updateHumidity(data) {
-            const point = chartSpeed.series[0].points[0];
-
-            let newVal = data.kelembaban;
-
-            point.update(newVal);
         }
     </script>
 @endpush
@@ -223,325 +191,258 @@
         });
 
 
-        function updateKetinggianChart() {
-            $.ajax({
-                url: '{{ route('sensor.ajax') }}',
-                method: 'GET',
-                dataType: 'json',
-                success: function(response) {
-                    var data = response.data;
-                    var air = data.sensor;
-                    // Mengupdate label dan data pada chart ketinggian air
-                    ketinggianChart.data.labels = [air];
-                    ketinggianChart.data.datasets[0].label = [data.status];
-                    ketinggianChart.data.datasets[0].data = [air];
+        // function updateKetinggianChart() {
+        //     $.ajax({
+        //         url: '{{ route('sensor.ajax') }}',
+        //         method: 'GET',
+        //         dataType: 'json',
+        //         success: function(response) {
+        //             var data = response.data;
+        //             var air = data.sensor;
+        //             // Mengupdate label dan data pada chart ketinggian air
+        //             ketinggianChart.data.labels = [air];
+        //             ketinggianChart.data.datasets[0].label = [data.status];
+        //             ketinggianChart.data.datasets[0].data = [air];
 
-                    // Mengupdate warna latar belakang chart ketinggian air berdasarkan status
-                    var ketinggianBackgroundColor;
-                    if (data.status == 'Aman') {
-                        ketinggianBackgroundColor = 'green';
-                    } else if (data.status == 'Siaga') {
-                        ketinggianBackgroundColor = 'yellow';
-                    } else {
-                        ketinggianBackgroundColor = 'red';
-                    }
-                    ketinggianChart.data.datasets[0].backgroundColor = [ketinggianBackgroundColor];
+        //             // Mengupdate warna latar belakang chart ketinggian air berdasarkan status
+        //             var ketinggianBackgroundColor;
+        //             if (data.status == 'Aman') {
+        //                 ketinggianBackgroundColor = 'green';
+        //             } else if (data.status == 'Siaga') {
+        //                 ketinggianBackgroundColor = 'yellow';
+        //             } else {
+        //                 ketinggianBackgroundColor = 'red';
+        //             }
+        //             ketinggianChart.data.datasets[0].backgroundColor = [ketinggianBackgroundColor];
 
-                    // Mengupdate grafik ketinggian air
-                    ketinggianChart.update();
+        //             // Mengupdate grafik ketinggian air
+        //             ketinggianChart.update();
 
-                },
-                error: function(xhr, status, error) {
-                    console.log(error); // Menampilkan pesan error jika terjadi kesalahan
-                }
-            });
-        }
+        //         },
+        //         error: function(xhr, status, error) {
+        //             console.log(error); // Menampilkan pesan error jika terjadi kesalahan
+        //         }
+        //     });
+        // }
     </script>
 @endpush
 
-@push('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Highcharts.chart('kecepatan', {
-
-                chart: {
-                    type: 'gauge',
-                    plotBackgroundColor: null,
-                    plotBackgroundImage: null,
-                    plotBorderWidth: 0,
-                    plotShadow: false,
-                    height: '65%'
-                },
-
-                title: {
-                    text: ''
-                },
-
-                pane: {
-                    startAngle: -90,
-                    endAngle: 89.9,
-                    background: null,
-                    center: ['50%', '75%'],
-                    size: '120%'
-                },
-
-                // the value axis
-                yAxis: {
-                    min: 0,
-                    max: 200,
-                    tickPixelInterval: 72,
-                    tickPosition: 'inside',
-                    tickColor: Highcharts.defaultOptions.chart.backgroundColor || '#FFFFFF',
-                    tickLength: 20,
-                    tickWidth: 2,
-                    minorTickInterval: null,
-                    labels: {
-                        distance: 20,
-                        style: {
-                            fontSize: '14px'
-                        }
-                    },
-                    lineWidth: 0,
-                    plotBands: [{
-                        from: 0,
-                        to: 120,
-                        color: '#55BF3B', // green
-                        thickness: 20
-                    }, {
-                        from: 120,
-                        to: 160,
-                        color: '#DDDF0D', // yellow
-                        thickness: 20
-                    }, {
-                        from: 160,
-                        to: 200,
-                        color: '#DF5353', // red
-                        thickness: 20
-                    }]
-                },
-
-                series: [{
-                    name: 'Speed',
-                    data: [0],
-                    tooltip: {
-                        valueSuffix: ' m/s'
-                    },
-                    dataLabels: {
-                        format: '{y} m/s',
-                        borderWidth: 0,
-                        color: (
-                            Highcharts.defaultOptions.title &&
-                            Highcharts.defaultOptions.title.style &&
-                            Highcharts.defaultOptions.title.style.color
-                        ) || '#333333',
-                        style: {
-                            fontSize: '16px'
-                        }
-                    },
-                    dial: {
-                        radius: '80%',
-                        backgroundColor: 'gray',
-                        baseWidth: 12,
-                        baseLength: '0%',
-                        rearLength: '0%'
-                    },
-                    pivot: {
-                        backgroundColor: 'gray',
-                        radius: 6
-                    }
-
-                }]
-
-            });
-        });
-    </script>
-@endpush
 
 @push('scripts')
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Highcharts.chart('suhu', {
+        var data = {
+            labels: [0],
+            datasets: [{
+                label: 'Kecepatan Angin',
+                data: [0],
+                borderColor: 'rgb(189,195,199)',
+                lineTension: 0.5
+            }]
+        };
 
-                chart: {
-                    type: 'gauge',
-                    plotBackgroundColor: null,
-                    plotBackgroundImage: null,
-                    plotBorderWidth: 0,
-                    plotShadow: false,
-                    height: '65%'
-                },
-
-                title: {
-                    text: ''
-                },
-
-                pane: {
-                    startAngle: -90,
-                    endAngle: 89.9,
-                    background: null,
-                    center: ['50%', '75%'],
-                    size: '120%'
-                },
-
-                // the value axis
-                yAxis: {
-                    min: 0,
-                    max: 100,
-                    tickPixelInterval: 72,
-                    tickPosition: 'inside',
-                    tickColor: Highcharts.defaultOptions.chart.backgroundColor || '#FFFFFF',
-                    tickLength: 20,
-                    tickWidth: 2,
-                    minorTickInterval: null,
-                    labels: {
-                        distance: 20,
-                        style: {
-                            fontSize: '14px'
-                        }
-                    },
-                    lineWidth: 0,
-                    plotBands: [{
-                        from: 0,
-                        to: 10,
-                        color: '#55BF3B', // green
-                        thickness: 20
-                    }, {
-                        from: 10,
-                        to: 30,
-                        color: '#DDDF0D', // yellow
-                        thickness: 20
-                    }, {
-                        from: 30,
-                        to: 100,
-                        color: '#DF5353', // red
-                        thickness: 20
-                    }]
-                },
-
-                series: [{
-                    name: 'Suhu',
-                    data: [0],
-                    tooltip: {
-                        valueSuffix: ' °C'
-                    },
-                    dataLabels: {
-                        format: '{y} °C',
-                        borderWidth: 0,
-                        color: (
-                            Highcharts.defaultOptions.title &&
-                            Highcharts.defaultOptions.title.style &&
-                            Highcharts.defaultOptions.title.style.color
-                        ) || '#333333',
-                        style: {
-                            fontSize: '16px'
-                        }
-                    },
-                    dial: {
-                        radius: '80%',
-                        backgroundColor: 'gray',
-                        baseWidth: 12,
-                        baseLength: '0%',
-                        rearLength: '0%'
-                    },
-                    pivot: {
-                        backgroundColor: 'gray',
-                        radius: 6
-                    }
-
-                }]
-
-            });
-        });
-    </script>
-@endpush
-
-@push('scripts')
-    <script>
-        var gaugeOptions = {
-            chart: {
-                type: 'solidgauge'
-            },
-
-            title: null,
-
-            pane: {
-                center: ['50%', '85%'],
-                size: '140%',
-                startAngle: -90,
-                endAngle: 90,
-                background: {
-                    backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || '#EEE',
-                    innerRadius: '60%',
-                    outerRadius: '100%',
-                    shape: 'arc'
-                }
-            },
-
-            exporting: {
-                enabled: false
-            },
-
-            tooltip: {
-                enabled: false
-            },
-
-            // the value axis
-            yAxis: {
-                stops: [
-                    [0.1, '#55BF3B'], // green
-                    [0.5, '#DDDF0D'], // yellow
-                    [0.9, '#DF5353'] // red
-                ],
-                lineWidth: 0,
-                tickWidth: 0,
-                minorTickInterval: null,
-                tickAmount: 2,
-                title: {
-                    y: -70
-                },
-                labels: {
-                    y: 16
-                }
-            },
-
-            plotOptions: {
-                solidgauge: {
-                    dataLabels: {
-                        y: 5,
-                        borderWidth: 0,
-                        useHTML: true
-                    }
-                }
+        var config = {
+            type: 'line',
+            data: data,
+            options: {
+                responsive: true
             }
         };
 
-        // The speed gauge
-        var chartSpeed = Highcharts.chart('humidity', Highcharts.merge(gaugeOptions, {
-            yAxis: {
-                min: 0,
-                title: {
-                    text: 'Humidity'
+        var kecepatanChart = new Chart(
+            document.getElementById('kecepatan'),
+            config
+        );
+
+        function mycallback() {
+            $.ajax({
+                type: "GET",
+                url: "{{ route('ajax.getLatestData') }}",
+                dataType: "json",
+                success: function(response) {
+                    let data = response.data;
+                    let index = 0;
+
+                    function updateChart() {
+                        if (index < data.length) {
+                            let item = data[index];
+                            let tanggal = item.tanggal;
+                            let weend_speed = item.weend_speed;
+                            let createdAt = moment(item.created_at);
+                            let waktu = createdAt.format('HH:mm:ss')
+
+                            if (kecepatanChart.data.datasets[0].data.length >= 10) {
+                                kecepatanChart.data.labels.shift();
+                                kecepatanChart.data.datasets[0].data.shift();
+                            }
+
+                            kecepatanChart.data.labels.push(waktu);
+                            kecepatanChart.data.datasets[0].data.push(weend_speed);
+
+                            kecepatanChart.update();
+
+                            index++;
+
+                            // Wait for a certain period of time before updating with the next data
+                            setTimeout(updateChart, 5000);
+                        }
+                    }
+
+                    // Start updating the chart
+                    updateChart();
                 }
-            },
+            });
+        }
 
-            credits: {
-                enabled: false
-            },
 
-            series: [{
-                name: 'Humidity',
-                data: [0],
-                dataLabels: {
-                    format: '<div style="text-align:center">' +
-                        '<span style="font-size:25px">{y}</span><br/>' +
-                        '<span style="font-size:12px;opacity:0.4">%</span>' +
-                        '</div>'
-                },
-                tooltip: {
-                    valueSuffix: ' %'
-                }
-            }]
-
-        }));
+        setInterval(mycallback, 5000);
     </script>
 @endpush
+
+
+
+
+@push('scripts')
+    <script>
+        var data = {
+            labels: [0],
+            datasets: [{
+                label: 'Suhu',
+                data: [0],
+                borderColor: 'rgb(189,195,199)',
+                lineTension: 0.5
+            }]
+        };
+
+        var config = {
+            type: 'line',
+            data: data,
+            options: {
+                responsive: true
+            }
+        };
+
+        var suhuChart = new Chart(
+            document.getElementById('suhu'),
+            config
+        );
+
+        function suhu() {
+            $.ajax({
+                type: "GET",
+                url: "{{ route('ajax.getLatestData') }}",
+                dataType: "json",
+                success: function(response) {
+                    let data = response.data;
+                    let index = 0;
+
+                    function updateChart() {
+                        if (index < data.length) {
+                            let item = data[index];
+                            let tanggal = item.tanggal;
+                            let suhu = item.suhu;
+                            let createdAt = moment(item.created_at);
+                            let waktu = createdAt.format('HH:mm:ss');
+
+                            // console.log('Waktu:', waktu);
+
+                            if (suhuChart.data.datasets[0].data.length >= 10) {
+                                suhuChart.data.labels.shift();
+                                suhuChart.data.datasets[0].data.shift();
+                            }
+
+                            suhuChart.data.labels.push(waktu);
+                            suhuChart.data.datasets[0].data.push(suhu);
+
+                            suhuChart.update();
+
+                            index++;
+
+                            // Wait for a certain period of time before updating with the next data
+                            setTimeout(updateChart, 5000);
+                        }
+                    }
+
+                    // Start updating the chart
+                    updateChart();
+                }
+            });
+        }
+
+
+        setInterval(suhu, 5000);
+    </script>
+@endpush
+
+
+@push('scripts')
+    <script>
+        var data = {
+            labels: [0],
+            datasets: [{
+                label: 'Humidity',
+                data: [0],
+                borderColor: 'rgb(189,195,199)',
+                lineTension: 0.5
+            }]
+        };
+
+        var config = {
+            type: 'line',
+            data: data,
+            options: {
+                responsive: true
+            }
+        };
+
+        var humidityChart = new Chart(
+            document.getElementById('humidity'),
+            config
+        );
+
+        function humidity() {
+            $.ajax({
+                type: "GET",
+                url: "{{ route('ajax.getLatestData') }}",
+                dataType: "json",
+                success: function(response) {
+                    let data = response.data;
+                    let index = 0;
+
+                    function updateChart() {
+                        if (index < data.length) {
+                            let item = data[index];
+                            let tanggal = item.tanggal;
+                            let humidity = item.kelembaban;
+                            let createdAt = moment(item.created_at);
+                            let waktu = createdAt.format('HH:mm:ss');
+
+                            // console.log('Waktu:', waktu);
+
+                            if (humidityChart.data.datasets[0].data.length >= 10) {
+                                humidityChart.data.labels.shift();
+                                humidityChart.data.datasets[0].data.shift();
+                            }
+
+                            humidityChart.data.labels.push(waktu);
+                            humidityChart.data.datasets[0].data.push(humidity);
+
+                            humidityChart.update();
+
+                            index++;
+
+                            // Wait for a certain period ohumidityf time before updating with the next data
+                            setTimeout(updateChart, 5000);
+                        }
+                    }
+
+                    // Start updating the chart
+                    updateChart();
+                }
+            });
+        }
+
+
+        setInterval(humidity, 5000);
+    </script>
+@endpush
+

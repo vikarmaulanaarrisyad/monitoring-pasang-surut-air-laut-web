@@ -60,7 +60,7 @@
                             DATA MONITORING
                         </div>
                         <div class="card-body">
-                            <table class="table table-striped" id="table">
+                            <table class="table table-striped" id="table" style="width: 100%">
                                 <thead class="thead-light">
                                     <tr>
                                         <th>#</th>

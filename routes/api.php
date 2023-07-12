@@ -33,3 +33,4 @@ Route::get('/suhu/data',[SensorLaravelController::class, 'getDataSuhu'])->name('
 Route::get('/humidity/data',[SensorLaravelController::class, 'getDataHumidity'])->name('api.humidity.data');
 
 Route::get('ajax/get_data', [SensorLaravelController::class, 'getAllData'])->name('ajax.getAllData');
+Route::get('ajax/get_last_data', [SensorLaravelController::class, 'getLatestData'])->name('ajax.getLatestData');
