@@ -341,15 +341,23 @@
     {{-- <script src="{{ asset('frontend') }}/js/contact-form-script.js"></script> --}}
     <script src="{{ asset('frontend') }}/js/main.js"></script>
 
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    {{--  <script src="https://code.highcharts.com/highcharts.js"></script>  --}}
+    {{--  <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  --}}
 
-       <!-- Include Moment.js library -->
+    <script src="{{ asset('frontend/js/highcharts.js') }}"></script>
+    <script src="{{ asset('frontend/js/export-data.js') }}"></script>
+    <script src="{{ asset('frontend/js/exporting.js') }}"></script>
+    <script src="{{ asset('frontend/js/highcharts-more.js') }}"></script>
+    <script src="{{ asset('frontend/js/solid-gauge.js') }}"></script>
+    <script src="{{ asset('frontend/js/chart.js') }}"></script>
+    <script src="{{ asset('frontend/js/accessibility.js') }}"></script>
+
+    <!-- Include Moment.js library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <!-- Include Moment Timezone plugin -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone-with-data.min.js"></script>

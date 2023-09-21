@@ -98,7 +98,7 @@
             // Mengupdate grafik setiap 5 detik
             setInterval(() => {
                 updateData();
-            }, 2000);
+            }, 5000);
         });
     </script>
 @endpush
