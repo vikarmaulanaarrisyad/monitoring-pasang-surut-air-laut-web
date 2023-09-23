@@ -206,9 +206,8 @@
 
                         <div class="feature-info ">
                             <h4 style="font-size: 2em; text-align: center">Suhu</h4>
-                            <p>
-                            <div id="container3" style="width:100%; height:400px;"></div>
-                            </p>
+                            <canvas id="suhu"></canvas>
+                            {{--  <div id="container3" style="width:100%; height:400px;"></div>  --}}
                         </div>
                     </div>
                     <!-- End Fetatures -->
@@ -228,7 +227,6 @@
             <!-- End Row -->
         </div>
     </section>
-    <!-- Cool Fetatures Section End -->
 
     <!-- Blog Section -->
     <section id="blog" class="section">
@@ -337,18 +335,7 @@
     <script src="{{ asset('frontend') }}/js/jquery.easing.min.js"></script>
     <script src="{{ asset('frontend') }}/js/nivo-lightbox.js"></script>
     <script src="{{ asset('frontend') }}/js/jquery.magnific-popup.min.js"></script>
-    {{-- <script src="{{ asset('frontend') }}/js/form-validator.min.js"></script> --}}
-    {{-- <script src="{{ asset('frontend') }}/js/contact-form-script.js"></script> --}}
     <script src="{{ asset('frontend') }}/js/main.js"></script>
-
-    {{--  <script src="https://code.highcharts.com/highcharts.js"></script>  --}}
-    {{--  <script src="https://code.highcharts.com/highcharts-more.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/export-data.js"></script>
-    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  --}}
-
     <script src="{{ asset('frontend/js/highcharts.js') }}"></script>
     <script src="{{ asset('frontend/js/export-data.js') }}"></script>
     <script src="{{ asset('frontend/js/exporting.js') }}"></script>
@@ -574,118 +561,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            Highcharts.chart('container3', {
-                chart: {
-                    type: 'gauge',
-                    plotBackgroundColor: null,
-                    plotBackgroundImage: null,
-                    plotBorderWidth: 0,
-                    plotShadow: false,
-                    height: '65%'
-                },
-
-                title: {
-                    text: ''
-                },
-
-                pane: {
-                    startAngle: -90,
-                    endAngle: 89.9,
-                    background: null,
-                    center: ['50%', '75%'],
-                    size: '120%'
-                },
-
-                // the value axis
-                yAxis: {
-                    min: 0,
-                    max: 100,
-                    tickPixelInterval: 72,
-                    tickPosition: 'inside',
-                    tickColor: Highcharts.defaultOptions.chart.backgroundColor || '#FFFFFF',
-                    tickLength: 20,
-                    tickWidth: 2,
-                    minorTickInterval: null,
-                    labels: {
-                        distance: 20,
-                        style: {
-                            fontSize: '14px'
-                        }
-                    },
-                    lineWidth: 0,
-                    plotBands: [{
-                        from: 0,
-                        to: 10,
-                        color: '#55BF3B', // green
-                        thickness: 20
-                    }, {
-                        from: 10,
-                        to: 30,
-                        color: '#DDDF0D', // yellow
-                        thickness: 20
-                    }, {
-                        from: 30,
-                        to: 100,
-                        color: '#DF5353', // red
-                        thickness: 20
-                    }]
-                },
-
-                series: [{
-                    name: 'Suhu',
-                    data: [0],
-                    tooltip: {
-                        valueSuffix: ' °C'
-                    },
-                    dataLabels: {
-                        format: '{y} °C',
-                        borderWidth: 0,
-                        color: (
-                            Highcharts.defaultOptions.title &&
-                            Highcharts.defaultOptions.title.style &&
-                            Highcharts.defaultOptions.title.style.color
-                        ) || '#333333',
-                        style: {
-                            fontSize: '16px'
-                        }
-                    },
-                    dial: {
-                        radius: '80%',
-                        backgroundColor: 'gray',
-                        baseWidth: 12,
-                        baseLength: '0%',
-                        rearLength: '0%'
-                    },
-                    pivot: {
-                        backgroundColor: 'gray',
-                        radius: 6
-                    }
-
-                }]
-
-            });
-
-            function updateDataSuhu() {
-                $.ajax({
-                    type: "GET",
-                    url: "{{ route('ajax.getAllData') }}",
-                    dataType: "json",
-                    success: function(response) {
-                        var chartSuhu = Highcharts.charts[2];
-                        var point = chartSuhu.series[0].points[0];
-                        var newVal = response.suhu;
-                        point.update(newVal);
-                    }
-                });
-            }
-
-            setInterval(updateDataSuhu, 5000); // Contoh: memperbarui setiap 5 detik
-        });
-    </script>
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
             const ctx = document.getElementById('myChart');
             const chart = new Chart(ctx, {
                 type: 'line',
@@ -734,6 +609,60 @@
         });
     </script>
 
+
+    {{--  Suhu  --}}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('suhu');
+            const chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Suhu °C',
+                        data: [0],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                }
+            });
+
+            function updateSuhu() {
+                // Menggunakan AJAX untuk mengambil data terbaru dari Laravel
+                $.ajax({
+                    type: "GET",
+                    url: '{{ route('ajax.getAllData') }}',
+                    dataType: "json",
+                    success: function(response) {
+                        let createdAt = moment(response.created_at);
+                        let waktu = createdAt.format('HH:mm:ss');
+                        chart.data.labels.push(waktu);
+                        chart.data.datasets[0].data.push(response.suhu);
+
+                        if (chart.data.datasets[0].data.length >= 10) {
+                            chart.data.labels.shift();
+                            chart.data.datasets[0].data.shift();
+                        }
+
+                        chart.update();
+                    }
+                });
+
+            }
+
+            // Panggil fungsi updateSuhu setiap beberapa detik
+            setInterval(updateSuhu, 5000); // Contoh: memperbarui setiap 5 detik
+        });
+    </script>
+
+    {{--  End Suhu  --}}
 
 </body>
 
